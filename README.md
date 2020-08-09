@@ -68,7 +68,11 @@ The following frameworks are available AWS Deep Learning Containers with the dee
 | [PyTorch](docs/pytorch.md) | 1.4, 1.5 |
 | [XGBoost](docs/xgboost.md) | 0.90-2, 1.0-1 ([As a built-in algorithm](docs/xgboost.md#use-xgboost-as-a-built-in-algorithm))|
 
+<<<<<<< HEAD
 >**Note**: Limited support of the zero script change experience for TensorFlow 2.2. The tensor collections currently available are `layers`, `inputs`, `outputs`, and `gradients`.
+=======
+>**Note**: Limited support of the zero script change experience for TensorFlow 2.2. The tensor collections `layers`, `inputs`, `outputs`, and `gradients` are currently not available.
+>>>>>>> e38f381b9fed23bc5f6294fdcdf3421ea1b5b3e1
 
 ### AWS training containers with script mode
 
