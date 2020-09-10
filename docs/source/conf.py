@@ -66,13 +66,12 @@ templates_path = ["_templates"]
 
 
 # The suffix of source filenames.
-
 source_suffix = {".rst": "restructuredtext", ".txt": "markdown", ".md": "markdown"}
 master_doc = "index"  # The master toctree document.
 
 # List of directories, relative to source directory, that shouldn't be searched
 # for source files.
-exclude_trees = ["_build"]
+exclude_trees = ["_build", "tests"]
 
 pygments_style = "default"
 
@@ -81,7 +80,6 @@ autodoc_default_flags = ["show-inheritance", "members", "undoc-members"]
 autodoc_member_order = "bysource"
 
 html_theme = "sphinx_rtd_theme"
-htmlhelp_basename = "%sdoc" % project
 
 # Example configuration for intersphinx: refer to the Python standard library.
 intersphinx_mapping = {"http://docs.python.org/": None}
@@ -94,9 +92,7 @@ autosectionlabel_prefix_document = True
 
 
 # At the bottom of conf.py
-github_doc_root = (
-    "https://github.com/mchoi8739/sagemaker-debugger/tree/smdebug-sphinx-apidoc/docs/source"
-)
+github_doc_root = "https://github.com/mchoi8739/sagemaker-debugger/tree/smdebug-sphinx-apidoc/docs/"
 
 
 def setup(app):

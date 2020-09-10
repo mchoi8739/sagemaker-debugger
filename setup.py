@@ -50,7 +50,6 @@ def build_package(version):
         long_description_content_type="text/markdown",
         author="AWS DeepLearning Team",
         description=DOCLINES[0],
-        packages=find_packages("src"),
         url="https://github.com/awslabs/sagemaker-debugger",
         packages=packages,
         classifiers=[
