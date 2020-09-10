@@ -35,8 +35,8 @@ def setup(app):
             "-E",  # user docstring headers
             #'-M', #Modules first
             "-o",  # Output the files to:
-            "./source/_autogen/",  # Output Directory
-            "./../arteryfe",  # Main Module directory
+            "./_autogen/",  # Output Directory
+            "./../..",  # Main Module directory
         ]
     )
 
