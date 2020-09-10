@@ -14,10 +14,20 @@ from smdebug.pytorch.utils import get_reduction_of_data, make_numpy_array
 
 DEFAULT_INCLUDE_COLLECTIONS = [CollectionKeys.LOSSES]
 
+"""Amazon SageMaker Debugger is a service that provides full visibility
+into the training of machine learning (ML) models, enabling customers
+to automatically detect several classes of errors. Customers can configure
+Debugger when starting their training jobs by specifying debug level, models,
+and location where debug output will be stored. Optionally, customers can
+also specify custom error conditions that they want to be alerted on.
+Debugger automatically collects model specific data, monitors for errors,
+and alerts when it detects errors during training.
+"""
+
 
 class Hook(CallbackHook):
     """
-    PyTorch Hook class
+    PyTorch Hook Configuration Helper
     """
 
     def __init__(
