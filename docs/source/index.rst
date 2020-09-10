@@ -11,6 +11,14 @@ Welcome to smdebug-api-doc's documentation!
    :caption: Contents:
    ../../README.md
 
+********
+Overview
+********
+
+.. toctree::
+   :maxdepth:2
+
+   ../../README.md
 
 Indices and tables
 ==================
