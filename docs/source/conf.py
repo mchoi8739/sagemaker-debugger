@@ -6,16 +6,11 @@
 
 # -- Path setup --------------------------------------------------------------
 
+# Standard Library
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
-# import os
-# import sys
-# sys.path.insert(0, os.path.abspath('.'))
-
-
-# Standard Library
 # -- Project information -----------------------------------------------------
 from datetime import datetime
 
@@ -24,7 +19,7 @@ copyright = u"%s, Amazon" % datetime.now().year
 author = "AWS DeepLearning Team"
 
 # The full version, including alpha/beta/rc tags
-release = "0.1"
+release = "0.0.1"
 
 
 # -- General configuration ---------------------------------------------------
@@ -72,9 +67,6 @@ templates_path = ["_templates"]
 source_suffix = {".rst": "restructuredtext", ".txt": "markdown", ".md": "markdown"}
 master_doc = "index"  # The master toctree document.
 
-# The full version, including alpha/beta/rc tags.
-release = "0.0.1"
-
 # List of directories, relative to source directory, that shouldn't be searched
 # for source files.
 exclude_trees = ["_build"]
@@ -84,6 +76,7 @@ pygments_style = "default"
 autoclass_content = "both"
 autodoc_default_flags = ["show-inheritance", "members", "undoc-members"]
 autodoc_member_order = "bysource"
+
 
 if "READTHEDOCS" in os.environ:
     html_theme = "default"
