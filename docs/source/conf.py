@@ -73,7 +73,7 @@ source_suffix = {".rst": "restructuredtext", ".txt": "markdown", ".md": "markdow
 master_doc = "index"  # The master toctree document.
 
 # The full version, including alpha/beta/rc tags.
-release = version
+release = "0.0.1"
 
 # List of directories, relative to source directory, that shouldn't be searched
 # for source files.
