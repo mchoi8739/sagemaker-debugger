@@ -77,12 +77,7 @@ autoclass_content = "both"
 autodoc_default_flags = ["show-inheritance", "members", "undoc-members"]
 autodoc_member_order = "bysource"
 
-
-if "READTHEDOCS" in os.environ:
-    html_theme = "default"
-else:
-    html_theme = "haiku"
-html_static_path = []
+html_theme = "sphinx_rtd_theme"
 htmlhelp_basename = "%sdoc" % project
 
 # Example configuration for intersphinx: refer to the Python standard library.
