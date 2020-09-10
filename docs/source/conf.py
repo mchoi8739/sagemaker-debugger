@@ -95,7 +95,7 @@ autosectionlabel_prefix_document = True
 
 # At the bottom of conf.py
 github_doc_root = (
-    "https://github.com/mchoi8739/sagemaker-debugger/tree/smdebug-sphinx-apidoc/docs/source"
+    "https://github.com/mchoi8739/sagemaker-debugger/tree/smdebug-sphinx-apidoc/docs/source/"
 )
 
 

@@ -16,6 +16,10 @@ DEFAULT_INCLUDE_COLLECTIONS = [CollectionKeys.LOSSES]
 
 
 class Hook(CallbackHook):
+    """
+    PyTorch Hook class
+    """
+
     def __init__(
         self,
         out_dir=None,

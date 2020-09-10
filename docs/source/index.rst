@@ -1,9 +1,8 @@
-.. smdebug-api-doc documentation master file, created by
-   sphinx-quickstart on Wed Sep  9 18:16:49 2020.
+.. smdebug-api-doc documentation master file.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to smdebug-api-doc's documentation!
+Welcome to smdebug API documentation!
 ===========================================
 
 .. toctree::
