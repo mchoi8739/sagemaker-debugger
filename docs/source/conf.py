@@ -6,20 +6,20 @@
 
 # -- Path setup --------------------------------------------------------------
 
-# Standard Library
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
+# import os
+# import sys
+# sys.path.insert(0, os.path.abspath('.'))
+
+
 # -- Project information -----------------------------------------------------
-from datetime import datetime
 
-# Third Party
-from recommonmark.transform import AutoStructify
-
-project = "smdebug"
-copyright = u"%s, Amazon" % datetime.now().year
-author = "AWS DeepLearning Team"
+project = "smdebug-readthedoc-test"
+copyright = "2020, Miyoung Choi"
+author = "Miyoung Choi"
 
 # The full version, including alpha/beta/rc tags
 release = "0.0.1"
@@ -30,6 +30,25 @@ release = "0.0.1"
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
+# extensions = [
+# ]
+
+# Add any paths that contain templates here, relative to this directory.
+templates_path = ["_templates"]
+
+# List of patterns, relative to source directory, that match files and
+# directories to ignore when looking for source files.
+# This pattern also affects html_static_path and html_extra_path.
+exclude_patterns = []
+
+
+# -- Options for HTML output -------------------------------------------------
+
+# The theme to use for HTML and HTML Help pages.  See the documentation for
+# a list of builtin themes.
+#
+
+
 extensions = [
     "sphinx_rtd_theme",
     "recommonmark",
@@ -43,35 +62,9 @@ extensions = [
     "sphinx.ext.autosectionlabel",
 ]
 
-# Add any paths that contain templates here, relative to this directory.
-templates_path = ["_templates"]
-
-# List of patterns, relative to source directory, that match files and
-# directories to ignore when looking for source files.
-# This pattern also affects html_static_path and html_extra_path.
-exclude_patterns = []
-
-
-# -- Options for HTML output -------------------------------------------------
-
-# Add any paths that contain custom static files (such as style sheets) here,
-# relative to this directory. They are copied after the builtin static files,
-# so a file named "default.css" will overwrite the builtin "default.css".
-html_static_path = ["_static"]
-
-# Add any paths that contain templates here, relative to this directory.
-templates_path = ["_templates"]
-
-# Markdown support
-
-
-# The suffix of source filenames.
-source_suffix = {".rst": "restructuredtext", ".txt": "markdown", ".md": "markdown"}
-master_doc = "index"  # The master toctree document.
-
 # List of directories, relative to source directory, that shouldn't be searched
 # for source files.
-exclude_trees = ["_build", "tests"]
+exclude_trees = ["_build"]
 
 pygments_style = "default"
 
@@ -80,6 +73,21 @@ autodoc_default_flags = ["show-inheritance", "members", "undoc-members"]
 autodoc_member_order = "bysource"
 
 html_theme = "sphinx_rtd_theme"
+html_theme_options = {"logo_only": True, "navigation_depth": 5}
+
+# html_theme = 'alabaster'
+
+# Add any paths that contain custom static files (such as style sheets) here,
+# relative to this directory. They are copied after the builtin static files,
+# so a file named "default.css" will overwrite the builtin "default.css".
+html_static_path = ["_static"]
+
+master_doc = "index"
+
+
+htmlhelp_basename = "%sdoc" % project
+
+html_js_files = ["https://a0.awsstatic.com/s_code/js/1.0/awshome_s_code.js", "js/analytics.js"]
 
 # Example configuration for intersphinx: refer to the Python standard library.
 intersphinx_mapping = {"http://docs.python.org/": None}
@@ -90,9 +98,18 @@ autosummary_generate = True
 # autosectionlabel
 autosectionlabel_prefix_document = True
 
+# Markdown support
+
+
+# The suffix of source filenames.
+
+source_suffix = {".rst": "restructuredtext", ".txt": "markdown", ".md": "markdown"}
+
+# Third Party
+from recommonmark.transform import AutoStructify
 
 # At the bottom of conf.py
-github_doc_root = "https://github.com/mchoi8739/sagemaker-debugger/tree/smdebug-sphinx-apidoc/docs/"
+github_doc_root = "https://github.com/mchoi8739/smdebug-readthedoc-test/tree/master/docs/"
 
 
 def setup(app):
