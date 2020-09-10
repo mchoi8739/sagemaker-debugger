@@ -15,7 +15,6 @@
 from datetime import datetime
 
 # Third Party
-import sphinx.apidoc
 from recommonmark.transform import AutoStructify
 
 project = "smdebug"
@@ -24,22 +23,6 @@ author = "AWS DeepLearning Team"
 
 # The full version, including alpha/beta/rc tags
 release = "0.0.1"
-
-
-def setup(app):
-    sphinx.apidoc.main(
-        [
-            "-f",  # Overwrite existing files
-            "-T",  # Create table of contents
-            #'-e', #Give modules their own pages
-            "-E",  # user docstring headers
-            #'-M', #Modules first
-            "-o",  # Output the files to:
-            "./_autogen/",  # Output Directory
-            "./../..",  # Main Module directory
-        ]
-    )
-
 
 # -- General configuration ---------------------------------------------------
 
