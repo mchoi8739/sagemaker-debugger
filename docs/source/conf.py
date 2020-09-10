@@ -14,6 +14,9 @@
 # -- Project information -----------------------------------------------------
 from datetime import datetime
 
+# Third Party
+from recommonmark.transform import AutoStructify
+
 project = "smdebug-api-doc"
 copyright = u"%s, Amazon" % datetime.now().year
 author = "AWS DeepLearning Team"
@@ -88,3 +91,16 @@ autosummary_generate = True
 
 # autosectionlabel
 autosectionlabel_prefix_document = True
+
+
+# At the bottom of conf.py
+github_doc_root = "https://github.com/mchoi8739/sagemaker-debugger/tree/smdebug-sphinx-apidoc/docs/"
+
+
+def setup(app):
+    app.add_config_value(
+        "recommonmark_config",
+        {"url_resolver": lambda url: github_doc_root + url, "auto_toc_tree_section": "Contents"},
+        True,
+    )
+    app.add_transform(AutoStructify)
