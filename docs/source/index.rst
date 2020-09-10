@@ -8,7 +8,7 @@ Welcome to smdebug API documentation!
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
-   ../../README.md
+   README.md
 
 ********
 Overview
@@ -17,7 +17,7 @@ Overview
 .. toctree::
    :maxdepth:2
 
-   ../../README.md
+   README.md
 
 Indices and tables
 ==================
