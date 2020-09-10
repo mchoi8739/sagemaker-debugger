@@ -17,7 +17,7 @@ from datetime import datetime
 # Third Party
 from recommonmark.transform import AutoStructify
 
-project = "smdebug-api-doc"
+project = "smdebug"
 copyright = u"%s, Amazon" % datetime.now().year
 author = "AWS DeepLearning Team"
 
@@ -94,7 +94,9 @@ autosectionlabel_prefix_document = True
 
 
 # At the bottom of conf.py
-github_doc_root = "https://github.com/mchoi8739/sagemaker-debugger/tree/smdebug-sphinx-apidoc/docs/"
+github_doc_root = (
+    "https://github.com/mchoi8739/sagemaker-debugger/tree/smdebug-sphinx-apidoc/docs/source"
+)
 
 
 def setup(app):
