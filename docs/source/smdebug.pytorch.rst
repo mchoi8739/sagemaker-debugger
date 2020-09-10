@@ -15,7 +15,7 @@ smdebug.pytorch.collection module
 smdebug.pytorch.hook module
 ---------------------------
 
-.. automodule:: smdebug.pytorch.hook
+.. automodule:: smdebug.pytorch.hook.Hook
    :members:
    :undoc-members:
    :show-inheritance:
