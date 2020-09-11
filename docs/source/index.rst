@@ -5,10 +5,7 @@
 Welcome to smdebug API documentation!
 ===========================================
 
-.. toctree::
-   :maxdepth: 2
-   :caption: Contents:
-   README.md
+README.md
 
 ********
 Overview
@@ -18,6 +15,13 @@ Overview
    :maxdepth:2
 
    README.md
+
+The smdebug Python SDK APIs:
+
+.. toctree::
+    :maxdepth: 2
+
+    api/index
 
 Indices and tables
 ==================
