@@ -5,8 +5,6 @@
 Welcome to smdebug API documentation!
 ===========================================
 
-README.md
-
 ********
 Overview
 ********
@@ -16,16 +14,19 @@ Overview
 
    README.md
 
+Supported FRAMEWORKS
+
+.. toctree::
+    :maxdepth: 2
+
+    tensorflow.md
+    pytorch.md
+    mxnet.md
+    xgboost.md
+
 The smdebug Python SDK APIs:
 
 .. toctree::
     :maxdepth: 2
 
     api/index
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
