@@ -79,7 +79,7 @@ autodoc_default_flags = ["show-inheritance", "members", "undoc-members"]
 autodoc_member_order = "bysource"
 
 # html_theme = "sphinx_rtd_theme"
-html_theme = "pyramid"
+html_theme = "classic"
 
 # Example configuration for intersphinx: refer to the Python standard library.
 intersphinx_mapping = {"http://docs.python.org/": None}
