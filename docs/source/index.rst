@@ -14,7 +14,7 @@ Overview
 
    README.md
 
-Supported FRAMEWORKS
+Supported Frameworks
 
 .. toctree::
     :maxdepth: 2
