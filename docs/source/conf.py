@@ -7,6 +7,8 @@
 # -- Path setup --------------------------------------------------------------
 
 # Standard Library
+import os
+import sys
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
@@ -16,6 +18,8 @@ from datetime import datetime
 
 # Third Party
 from recommonmark.transform import AutoStructify
+
+sys.path.insert(0, os.path.abspath('../../smdebug/'))
 
 project = "smdebug"
 copyright = u"%s, Amazon" % datetime.now().year
