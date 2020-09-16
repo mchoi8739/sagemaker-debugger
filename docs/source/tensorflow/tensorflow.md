@@ -10,7 +10,7 @@
 
 ---
 
-## Amazon SageMaker Debugger Support for TensorFlow<a name="support"></a>
+## Amazon SageMaker Debugger Support for TensorFlow
 
 Amazon SageMaker Debugger python SDK and its client library `smdebug` now fully support TensorFlow 2.2 with the latest version release.
 
@@ -30,7 +30,7 @@ Debugger and its client library `smdebug` support debugging your training job on
 
 ---
 
-## Using Debugger on AWS Deep Learning Containers with TensorFlow<a name="debugger-dlc"></a>
+## Using Debugger on AWS Deep Learning Containers with TensorFlow
 
 The Debugger built-in rules and hook features are fully integrated with the AWS Deep Learning Containers. You can run your training script without any script changes. When running training jobs on those Deep Learning Containers, Debugger registers its hooks automatically to your training script in order to retrieve tensors. To find a comprehensive guide of using the high-level SageMaker TensorFlow estimator with Debugger, see [Amazon SageMaker Debugger with TensorFlow](https://docs.aws.amazon.com/sagemaker/latest/dg/debugger-container.html#debugger-zero-script-change-TensorFlow) in the Amazon SageMaker Developer Guide.
 
@@ -80,7 +80,7 @@ pip install -U smdebug
 ```
 If you are using a Jupyter Notebook, put an exclamation mark (!) at the beginning of the code string and restart your kernel. For more information about the SageMaker Python SDK, see [Use Version 2.x of the SageMaker Python SDK](https://sagemaker.readthedocs.io/en/stable/v2.html).
 
-### Debugger Built-in Tensor Collections for TensorFlow<a name="tf-built-in-collection"></a>
+### Debugger Built-in Tensor Collections for TensorFlow
 
 The following table lists the pre-configured tensor collections for TensorFlow models. You can pick any tensor collections by specifying the `name` parameter of `CollectionConfig()` as shown in the previous base code example. SageMaker Debugger will save these tensors to the default out_dir of the hook.
 
@@ -107,7 +107,7 @@ For a full list of available tensor collection parameters, see [Configuring Coll
 
 ---
 
-## Using Debugger on SageMaker Training Containers and Custom Containers<a name="debugger-script-change"></a>
+## Using Debugger on SageMaker Training Containers and Custom Containers
 
 If you want to run your own training script or custom containers other than the AWS Deep Learning Containers in the previous option, you can use any of the following options:
 
@@ -124,7 +124,7 @@ For both options, you need to manually register the Debugger hook to your traini
 3. [Register the hook to model.fit()](#register-a-hook)
 
 
-### Step 1: Create a hook<a name="create-a-hook"></a>
+### Step 1: Create a hook
 
 To create the hook constructor, add the following code to your training script. This enables the `smdebug` tools for TensorFlow and creates a TensorFlow `hook` object. When you run the `fit()` API for training, specify the smdebug `hook` as `callbacks`, as shown in the following subsections.
 
@@ -193,7 +193,7 @@ These smdebug hook wrapper functions capture the gradient tensors, not affecting
 
 For examples of code structures that you can use to apply the hook wrappers, see the [Code Examples](#examples) section.
 
-### Step 3: Register the hook to model.fit()<a name="register-a-hook"></a>
+### Step 3: Register the hook to model.fit()
 
 To collect the tensors from the hooks that you registered, add `callbacks=[hook]` to the Keras `model.fit()` API. This will pass the SageMaker Debugger hook as a Keras callback. Similarly, add `hooks=[hook]` to the `MonitoredSession()`, `tf.function()`, and `tf.estimator()` APIs. For example:
 
@@ -213,7 +213,7 @@ For a full list of actions that the hook APIs offer to construct hooks and save 
 
 ---
 
-## Code Examples<a name="examples"></a>
+## Code Examples
 
 The following code examples show the base structures that you can use for hook registration in various TensorFlow training scripts. If you want to use the high-level Debugger features with zero script change on AWS Deep Learning Containers, see [Use Debugger in AWS Containers](https://docs.aws.amazon.com/sagemaker/latest/dg/debugger-container.html).
 

@@ -17,8 +17,8 @@ import sys
 from datetime import datetime
 
 # Third Party
-from recommonmark.transform import AutoStructify
 
+#sys.path.insert(0, os.path.abspath('../../smdebug/'))
 sys.path.insert(0, os.path.abspath('../../smdebug/'))
 
 project = "smdebug"
@@ -74,7 +74,7 @@ master_doc = "index"  # The master toctree document.
 
 # List of directories, relative to source directory, that shouldn't be searched
 # for source files.
-exclude_trees = ["_build", "tests"]
+exclude_trees = ["_build"]
 
 pygments_style = "default"
 
@@ -96,13 +96,8 @@ autosectionlabel_prefix_document = True
 
 
 # At the bottom of conf.py
-github_doc_root = "https://github.com/mchoi8739/sagemaker-debugger/tree/smdebug-sphinx-apidoc/docs/"
+github_doc_root = "https://github.com/mchoi8739/sagemaker-debugger/tree/smdebug-sphinx-apidoc/docs/source/"
 
 
 def setup(app):
-    app.add_config_value(
-        "recommonmark_config",
-        {"url_resolver": lambda url: github_doc_root + url, "auto_toc_tree_section": "Contents"},
-        True,
-    )
-    app.add_transform(AutoStructify)
+    app.add_css_file('custom.css')

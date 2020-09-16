@@ -10,23 +10,22 @@ Overview
 ********
 
 .. toctree::
-   :maxdepth:2
+  :maxdepth:2
 
-   README.md
-
-Supported Frameworks
+  README.md
 
 .. toctree::
-    :maxdepth: 2
+  :maxdepth:2
 
-    tensorflow.md
-    pytorch.md
-    mxnet.md
-    xgboost.md
+  mxnet/index
+  pytorch/index
+  tensorflow/index
+  xgboost/index
 
 The smdebug Python SDK APIs:
 
 .. toctree::
-    :maxdepth: 2
+    :maxdepth: 1
 
-    api/index
+    api-debugger/index
+    api-profiler/index

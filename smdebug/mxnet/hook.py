@@ -34,6 +34,24 @@ class Hook(CallbackHook):
         save_all=False,
         include_workers="one",
     ):
+        """The MXNet Hook class to register Debugger hook to training scripts.
+        Example:
+            ```
+            import smdebug.mxnet as smd
+            hook = smd.Hook.create_from_json_file()
+            ```
+        Args:
+            out_dir (str) - output directory to save tensors (required)
+            export_tensorboard (boolean) - Whether to save TensorBoard outputs
+            tensorboard_dir (str) - output directory to save TensorBoard outputs
+            dry_run (boolean) - Whether to do a dry run (default: False).
+            reduction_config=None,
+            save_config=None,
+            include_regex=None,
+            include_collections=None,
+            save_all=False,
+            include_workers="one",
+        """
         collection_manager = CollectionManager()
         super().__init__(
             collection_manager=collection_manager,
