@@ -56,7 +56,7 @@ templates_path = ["_templates"]
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This pattern also affects html_static_path and html_extra_path.
-exclude_patterns = []
+exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 
 
 # -- Options for HTML output -------------------------------------------------
@@ -66,19 +66,10 @@ exclude_patterns = []
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ["_static"]
 
-# Add any paths that contain templates here, relative to this directory.
-templates_path = ["_templates"]
-
 # Markdown support
-
-
 # The suffix of source filenames.
 source_suffix = {".rst": "restructuredtext", ".txt": "markdown", ".md": "markdown"}
 master_doc = "index"  # The master toctree document.
-
-# List of directories, relative to source directory, that shouldn't be searched
-# for source files.
-exclude_trees = ["_build"]
 
 pygments_style = "default"
 
@@ -89,19 +80,11 @@ autodoc_member_order = "bysource"
 html_theme = "sphinx_rtd_theme"
 #html_theme = "classic"
 
-# Example configuration for intersphinx: refer to the Python standard library.
-intersphinx_mapping = {"http://docs.python.org/": None}
-
 # autosummary
 autosummary_generate = True
 
 # autosectionlabel
 autosectionlabel_prefix_document = True
-
-
-# At the bottom of conf.py
-github_doc_root = "https://github.com/mchoi8739/sagemaker-debugger/tree/smdebug-sphinx-apidoc/docs/source/"
-
 
 def setup(app):
     app.add_css_file('custom.css')
