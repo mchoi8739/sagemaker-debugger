@@ -2,3 +2,6 @@ numpy>1.16.0,<2.0.0
 boto3>=1.10.32
 sphinx==3.1.1
 sphinx-rtd-theme==0.5.0
+mxnet
+torch
+tensorflow
