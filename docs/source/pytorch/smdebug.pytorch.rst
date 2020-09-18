@@ -1,6 +1,14 @@
 smdebug.pytorch package
 =======================
 
+Module contents
+---------------
+
+.. automodule:: smdebug.pytorch
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 Submodules
 ----------
 
@@ -32,15 +40,6 @@ smdebug.pytorch.utils module
 ----------------------------
 
 .. automodule:: smdebug.pytorch.utils
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-
-Module contents
----------------
-
-.. automodule:: smdebug.pytorch
    :members:
    :undoc-members:
    :show-inheritance:

@@ -18,8 +18,13 @@ from datetime import datetime
 
 # Third Party
 
-#sys.path.insert(0, os.path.abspath('../../smdebug/'))
 sys.path.insert(0, os.path.abspath('../../smdebug/'))
+
+import mock
+
+MOCK_MODULES = ['numpy', 'scipy']
+for mod_name in MOCK_MODULES:
+    sys.modules[mod_name] = mock.Mock()
 
 project = "smdebug"
 copyright = u"%s, Amazon" % datetime.now().year
