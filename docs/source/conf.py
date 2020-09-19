@@ -22,7 +22,7 @@ sys.path.insert(0, os.path.abspath('../../smdebug/'))
 
 import mock
 
-MOCK_MODULES = ["numpy", "scipy", "mxnet", "tensorflow", "torch"]
+MOCK_MODULES = ["numpy", "scipy", "mxnet", "tensorflow", "torch", "protobuf3"]
 for mod_name in MOCK_MODULES:
     sys.modules[mod_name] = mock.Mock()
 
