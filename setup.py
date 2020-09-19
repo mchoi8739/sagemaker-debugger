@@ -17,6 +17,7 @@ It supports TensorFlow, PyTorch, MXNet, and XGBoost on Python 3.6+.
 import os
 import sys
 from datetime import date
+from glob import glob
 
 # Third Party
 import setuptools
@@ -42,7 +43,8 @@ def compile_summary_protobuf():
 
 
 def build_package(version):
-    packages = setuptools.find_packages(include=["smdebug", "smdebug.*"])
+    # packages = setuptools.find_packages(include=["smdebug", "smdebug.*"])
+    packages = setuptools.find_packages("smdebug")
     setuptools.setup(
         name="smdebug",
         version=version,

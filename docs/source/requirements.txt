@@ -6,3 +6,4 @@ mxnet
 torch
 tensorflow
 protobuf3
+m2r
