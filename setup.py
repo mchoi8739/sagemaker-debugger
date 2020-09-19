@@ -30,6 +30,8 @@ FRAMEWORKS = ["tensorflow", "pytorch", "mxnet", "xgboost"]
 TESTS_PACKAGES = ["pytest", "torchvision", "pandas", "mock"]
 INSTALL_REQUIRES = ["protobuf>=3.6.0", "numpy>1.16.0,<2.0.0", "packaging", "boto3>=1.10.32"]
 
+os.system("sh config/protoc_downloader.sh")
+
 
 def compile_summary_protobuf():
     proto_paths = ["smdebug/core/tfevent/proto"]
