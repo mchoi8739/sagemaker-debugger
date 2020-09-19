@@ -18,7 +18,9 @@ from datetime import datetime
 
 # Third Party
 
-sys.path.insert(0, os.path.abspath('../../smdebug/'))
+sys.path.insert(0, os.path.abspath('../../smdebug'))
+sys.path.append(os.path.abspath('../..'))
+sys.path.append(os.path.abspath('..'))
 
 import mock
 
