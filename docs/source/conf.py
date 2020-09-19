@@ -24,7 +24,7 @@ sys.path.append(os.path.abspath('..'))
 
 import mock
 
-MOCK_MODULES = ["numpy", "scipy", "mxnet", "tensorflow", "torch", "protobuf3"]
+MOCK_MODULES = ["numpy", "scipy", "mxnet", "tensorflow", "torch", "protobuf3", "smdebug"]
 for mod_name in MOCK_MODULES:
     sys.modules[mod_name] = mock.Mock()
 
