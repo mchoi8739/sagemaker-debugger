@@ -97,10 +97,10 @@ def scan_git_secrets():
     return git("secrets", "--scan", "-r")
 
 
-if scan_git_secrets() != 0:
-    import sys
+# if scan_git_secrets() != 0:
+#    import sys
 
-    # sys.exit(1)
+# sys.exit(1)
 
 
 def detect_smdebug_version():
