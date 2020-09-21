@@ -1,8 +1,11 @@
 smdebug.xgboost package
 =======================
 
-Submodules
-----------
+smdebug.xgboost Introduction
+--------------------------
+
+.. toctree::
+   xgboost.md
 
 smdebug.xgboost.collection module
 ---------------------------------
@@ -20,27 +23,10 @@ smdebug.xgboost.hook module
    :undoc-members:
    :show-inheritance:
 
-smdebug.xgboost.singleton\_utils module
----------------------------------------
-
-.. automodule:: smdebug.xgboost.singleton_utils
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
 smdebug.xgboost.utils module
 ----------------------------
 
 .. automodule:: smdebug.xgboost.utils
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-
-Module contents
----------------
-
-.. automodule:: smdebug.xgboost
    :members:
    :undoc-members:
    :show-inheritance:

@@ -3,11 +3,26 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to smdebug-apidoc-test's documentation!
+Welcome to smdebug test's documentation!
 ===============================================
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Introduction to smdebug:
+
+   README.md
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Frameworks:
+
+   smdebug.mxnet
+   smdebug.pytorch
+   smdebug.tensorflow
+   smdebug.xgboost
 
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
 
-   modules
+   smdebug

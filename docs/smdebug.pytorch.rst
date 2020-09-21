@@ -1,8 +1,11 @@
 smdebug.pytorch package
 =======================
 
-Submodules
-----------
+smdebug.pytorch Introduction
+----------------------------
+
+.. toctree::
+   pytorch.md
 
 smdebug.pytorch.collection module
 ---------------------------------
@@ -20,27 +23,10 @@ smdebug.pytorch.hook module
    :undoc-members:
    :show-inheritance:
 
-smdebug.pytorch.singleton\_utils module
----------------------------------------
-
-.. automodule:: smdebug.pytorch.singleton_utils
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
 smdebug.pytorch.utils module
 ----------------------------
 
 .. automodule:: smdebug.pytorch.utils
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-
-Module contents
----------------
-
-.. automodule:: smdebug.pytorch
    :members:
    :undoc-members:
    :show-inheritance:

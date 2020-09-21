@@ -13,6 +13,7 @@
 import os
 import sys
 sys.path.insert(0, os.path.abspath('../'))
+sys.path.insert(0, os.path.abspath('../smdebug'))
 
 # -- Project information -----------------------------------------------------
 
@@ -35,12 +36,12 @@ extensions = [
     "recommonmark",
     "sphinx.ext.autodoc",
     "sphinx.ext.doctest",
-    "sphinx.ext.intersphinx",
-    "sphinx.ext.todo",
-    "sphinx.ext.coverage",
-    "sphinx.ext.autosummary",
-    "sphinx.ext.napoleon",
-    "sphinx.ext.autosectionlabel"
+    #"sphinx.ext.intersphinx",
+    #"sphinx.ext.todo",
+    #"sphinx.ext.coverage",
+    #"sphinx.ext.autosummary",
+    #"sphinx.ext.napoleon",
+    #"sphinx.ext.autosectionlabel"
 ]
 
 # Markdown support

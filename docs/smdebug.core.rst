@@ -1,16 +1,6 @@
 smdebug.core package
 ====================
 
-Subpackages
------------
-
-.. toctree::
-   :maxdepth: 4
-
-   smdebug.core.access_layer
-   smdebug.core.tfevent
-   smdebug.core.tfrecord
-
 Submodules
 ----------
 

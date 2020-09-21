@@ -1,21 +1,16 @@
 smdebug.tensorflow package
 ==========================
 
-Submodules
-----------
+smdebug.tensorflow Introduction
+-------------------------------
+
+.. toctree::
+   tensorflow.md
 
 smdebug.tensorflow.base\_hook module
 ------------------------------------
 
 .. automodule:: smdebug.tensorflow.base_hook
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-smdebug.tensorflow.callable\_cache module
------------------------------------------
-
-.. automodule:: smdebug.tensorflow.callable_cache
    :members:
    :undoc-members:
    :show-inheritance:
@@ -60,22 +55,6 @@ smdebug.tensorflow.session module
    :undoc-members:
    :show-inheritance:
 
-smdebug.tensorflow.singleton\_utils module
-------------------------------------------
-
-.. automodule:: smdebug.tensorflow.singleton_utils
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-smdebug.tensorflow.tensor\_ref module
--------------------------------------
-
-.. automodule:: smdebug.tensorflow.tensor_ref
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
 smdebug.tensorflow.utils module
 -------------------------------
 
@@ -88,15 +67,6 @@ smdebug.tensorflow.version\_check module
 ----------------------------------------
 
 .. automodule:: smdebug.tensorflow.version_check
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-
-Module contents
----------------
-
-.. automodule:: smdebug.tensorflow
    :members:
    :undoc-members:
    :show-inheritance:

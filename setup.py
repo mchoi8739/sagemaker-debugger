@@ -42,7 +42,8 @@ def compile_summary_protobuf():
 
 
 def build_package(version):
-    packages = setuptools.find_packages(include=["smdebug", "smdebug.*"])
+    # packages = setuptools.find_packages(include=["smdebug", "smdebug.*"])
+    packages = setuptools.find_packages("smdebug")
     setuptools.setup(
         name="smdebug",
         version=version,
@@ -74,6 +75,7 @@ if compile_summary_protobuf() != 0:
         "ERROR: Compiling summary protocol buffers failed. You will not be able to use smdebug. "
         "Please make sure that you have installed protobuf3 compiler and runtime correctly."
     )
+    os.system("sh config/protoc_downloader.sh")
     sys.exit(1)
 
 
