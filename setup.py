@@ -44,6 +44,9 @@ else:
         "boto3>=1.10.32",
     ]
 
+if docs_env == "True":
+    os.system("sh config/protoc_downloader.sh")
+
 
 def compile_summary_protobuf():
     proto_paths = ["smdebug/core/tfevent/proto"]
