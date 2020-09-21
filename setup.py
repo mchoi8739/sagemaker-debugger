@@ -38,7 +38,7 @@ else:
         "torch",
         "mxnet",
         "xgboost",
-        "protobuf>=3.6.0",
+        "protobuf==3.7.1",
         "numpy>1.16.0,<2.0.0",
         "packaging",
         "boto3>=1.10.32",
