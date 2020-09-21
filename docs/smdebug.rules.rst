@@ -35,12 +35,3 @@ smdebug.rules.rule\_invoker module
    :members:
    :undoc-members:
    :show-inheritance:
-
-
-Module contents
----------------
-
-.. automodule:: smdebug.rules
-   :members:
-   :undoc-members:
-   :show-inheritance:

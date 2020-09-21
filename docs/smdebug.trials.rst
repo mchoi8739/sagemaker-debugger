@@ -35,12 +35,3 @@ smdebug.trials.utils module
    :members:
    :undoc-members:
    :show-inheritance:
-
-
-Module contents
----------------
-
-.. automodule:: smdebug.trials
-   :members:
-   :undoc-members:
-   :show-inheritance:

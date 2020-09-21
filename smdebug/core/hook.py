@@ -75,6 +75,7 @@ class ScalarCache(object):
             timestamp: Timestamp at which this object is created.
         The 'save_scalar()' method creates objects of this class and caches the scalars that users intends to store.
         These objects will be written to disk in the next available step.
+
         """
         self.name = scalar_name
         self.value = scalar_val
@@ -146,6 +147,7 @@ class BaseHook:
             they are all saved in the collection `all`
         include_workers: str
             makes the hook save data from all workers
+
         """
         self.out_dir = verify_and_get_out_dir(out_dir)
         self.tensorboard_dir = get_tensorboard_dir(

@@ -2,7 +2,7 @@ smdebug.xgboost package
 =======================
 
 smdebug.xgboost Introduction
---------------------------
+----------------------------
 
 .. toctree::
    xgboost.md

@@ -75,7 +75,7 @@ if compile_summary_protobuf() != 0:
         "ERROR: Compiling summary protocol buffers failed. You will not be able to use smdebug. "
         "Please make sure that you have installed protobuf3 compiler and runtime correctly."
     )
-    # sys.exit(1)
+    sys.exit(1)
 
 
 def scan_git_secrets():

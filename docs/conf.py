@@ -12,7 +12,7 @@
 
 import os
 import sys
-sys.path.insert(0, os.path.abspath('../'))
+#sys.path.insert(0, os.path.abspath('../'))
 sys.path.insert(0, os.path.abspath('../smdebug'))
 
 # -- Project information -----------------------------------------------------
@@ -21,11 +21,7 @@ project = 'smdebug-apidoc-test'
 copyright = '2020, Miyoung Choi'
 author = 'Miyoung Choi'
 
-import mock
-
-MOCK_MODULES = ["numpy", "scipy", "mxnet", "tensorflow", "torch"]
-for mod_name in MOCK_MODULES:
-    sys.modules[mod_name] = mock.Mock()
+autodoc_mock_imports = ["mxnet", "tensorflow", "torch"]
 
 # -- General configuration ---------------------------------------------------
 
@@ -35,7 +31,7 @@ for mod_name in MOCK_MODULES:
 extensions = [
     "recommonmark",
     "sphinx.ext.autodoc",
-    "sphinx.ext.doctest",
+    #"sphinx.ext.doctest",
     #"sphinx.ext.intersphinx",
     #"sphinx.ext.todo",
     #"sphinx.ext.coverage",
@@ -49,11 +45,11 @@ extensions = [
 source_suffix = {".rst": "restructuredtext", ".txt": "markdown", ".md": "markdown"}
 master_doc = "index"  # The master toctree document.
 
-pygments_style = "default"
+#pygments_style = "default"
 
-autoclass_content = "both"
-autodoc_default_flags = ["show-inheritance", "members", "undoc-members"]
-autodoc_member_order = "bysource"
+#autoclass_content = "both"
+#autodoc_default_flags = ["show-inheritance", "members", "undoc-members"]
+#autodoc_member_order = "bysource"
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
