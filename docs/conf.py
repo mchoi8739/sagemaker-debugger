@@ -30,7 +30,7 @@ autodoc_mock_imports = ["mxnet", "tensorflow", "torch", "xgboost", "protobuf"]
 # ones.
 extensions = [
     "recommonmark",
-    "sphinx.ext.autodoc",
+    "sphinx.ext.autodoc"
     #"sphinx.ext.doctest",
     #"sphinx.ext.intersphinx",
     #"sphinx.ext.todo",
