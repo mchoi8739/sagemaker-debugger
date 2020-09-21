@@ -21,7 +21,7 @@ project = 'smdebug-apidoc-test'
 copyright = '2020, Miyoung Choi'
 author = 'Miyoung Choi'
 
-autodoc_mock_imports = ["mxnet", "tensorflow", "torch", "xgboost", "protobuf", "smdebug"]
+autodoc_mock_imports = ["mxnet", "tensorflow", "torch", "xgboost", "protobuf"]
 
 # -- General configuration ---------------------------------------------------
 
