@@ -35,7 +35,7 @@ if docs_env == "False":
 else:
     INSTALL_REQUIRES = [
         "tensorflow",
-        "pytorch",
+        "torch",
         "mxnet",
         "xgboost",
         "protobuf>=3.6.0",
