@@ -24,10 +24,25 @@ import setuptools
 # First Party
 import smdebug
 
+docs_env = os.environ.get("READTHEDOCS")
+
 DOCLINES = (__doc__ or "").split("\n")
 FRAMEWORKS = ["tensorflow", "pytorch", "mxnet", "xgboost"]
 TESTS_PACKAGES = ["pytest", "torchvision", "pandas"]
-INSTALL_REQUIRES = ["protobuf>=3.6.0", "numpy>1.16.0,<2.0.0", "packaging", "boto3>=1.10.32"]
+
+if docs_env == "False":
+    INSTALL_REQUIRES = ["protobuf>=3.6.0", "numpy>1.16.0,<2.0.0", "packaging", "boto3>=1.10.32"]
+else:
+    INSTALL_REQUIRES = [
+        "tensorflow",
+        "pytorch",
+        "mxnet",
+        "xgboost",
+        "protobuf>=3.6.0",
+        "numpy>1.16.0,<2.0.0",
+        "packaging",
+        "boto3>=1.10.32",
+    ]
 
 
 def compile_summary_protobuf():
@@ -69,13 +84,13 @@ def build_package(version):
     )
 
 
-if compile_summary_protobuf() != 0:
-    print(
-        "ERROR: Compiling summary protocol buffers failed. You will not be able to use smdebug. "
-        "Please make sure that you have installed protobuf3 compiler and runtime correctly."
-    )
-    # os.system("sh config/protoc_downloader.sh")
-    # sys.exit(1)
+if docs_env == "False":
+    if compile_summary_protobuf() != 0:
+        print(
+            "ERROR: Compiling summary protocol buffers failed. You will not be able to use smdebug. "
+            "Please make sure that you have installed protobuf3 compiler and runtime correctly."
+        )
+        sys.exit(1)
 
 
 def scan_git_secrets():
@@ -97,10 +112,9 @@ def scan_git_secrets():
     return git("secrets", "--scan", "-r")
 
 
-# if scan_git_secrets() != 0:
-#    import sys
-
-# sys.exit(1)
+if docs_env == "False":
+    if scan_git_secrets() != 0:
+        sys.exit(1)
 
 
 def detect_smdebug_version():
