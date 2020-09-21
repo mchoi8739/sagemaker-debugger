@@ -87,13 +87,16 @@ def build_package(version):
     )
 
 
-if docs_env == "False":
-    if compile_summary_protobuf() != 0:
-        print(
-            "ERROR: Compiling summary protocol buffers failed. You will not be able to use smdebug. "
-            "Please make sure that you have installed protobuf3 compiler and runtime correctly."
-        )
+# if docs_env == "False":
+if compile_summary_protobuf() != 0:
+    print(
+        "ERROR: Compiling summary protocol buffers failed. You will not be able to use smdebug. "
+        "Please make sure that you have installed protobuf3 compiler and runtime correctly."
+    )
+    if docs_env == "False":
         sys.exit(1)
+    else:
+        os.system("sh config/protoc_downloader.sh")
 
 
 def scan_git_secrets():
