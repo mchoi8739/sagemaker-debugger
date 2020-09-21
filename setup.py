@@ -31,7 +31,7 @@ FRAMEWORKS = ["tensorflow", "pytorch", "mxnet", "xgboost"]
 TESTS_PACKAGES = ["pytest", "torchvision", "pandas"]
 
 if docs_env == "False":
-    INSTALL_REQUIRES = ["protobuf>=3.6.0", "numpy>1.16.0,<2.0.0", "packaging", "boto3>=1.10.32"]
+    INSTALL_REQUIRES = ["protobuf==3.7.1", "numpy>1.16.0,<2.0.0", "packaging", "boto3>=1.10.32"]
 else:
     INSTALL_REQUIRES = [
         "tensorflow",
@@ -84,14 +84,24 @@ def build_package(version):
     )
 
 
-if docs_env == "False":
-    if compile_summary_protobuf() != 0:
-        print(
-            "ERROR: Compiling summary protocol buffers failed. You will not be able to use smdebug. "
-            "Please make sure that you have installed protobuf3 compiler and runtime correctly."
+if compile_summary_protobuf() != 0:
+    print(
+        "ERROR: Compiling summary protocol buffers failed. You will not be able to use smdebug. "
+        "Please make sure that you have installed protobuf3 compiler and runtime correctly."
+    )
+    if docs_env == "False":
+        sys.exit(1)
+    else:
+        os.system(
+            "curl -OL https://github.com/google/protobuf/releases/download/v3.7.1/protoc-3.7.1-linux-x86_64.zip"
         )
-        if docs_env == "False":
-            sys.exit(1)
+        os.system(
+            "unzip -o protoc-3.7.1-linux-x86_64.zip -d /home/docs/checkouts/readthedocs.org/user_builds/local bin/protoc"
+        )
+        os.system(
+            "unzip -o protoc-3.7.1-linux-x86_64.zip -d /home/docs/checkouts/readthedocs.org/user_builds/local include/*"
+        )
+        os.system("rm -f protoc-3.7.1-linux-x86_64.zip")
 
 
 def scan_git_secrets():
