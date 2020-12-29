@@ -29,20 +29,13 @@ docs_env = os.environ.get("READTHEDOCS")
 DOCLINES = (__doc__ or "").split("\n")
 FRAMEWORKS = ["tensorflow", "pytorch", "mxnet", "xgboost"]
 TESTS_PACKAGES = ["pytest", "torchvision", "pandas"]
-
-if docs_env == "False":
-    INSTALL_REQUIRES = ["protobuf==3.7.1", "numpy>1.16.0,<2.0.0", "packaging", "boto3>=1.10.32"]
-else:
-    INSTALL_REQUIRES = [
-        "tensorflow",
-        "torch",
-        "mxnet",
-        "xgboost",
-        "protobuf==3.7.1",
-        "numpy>1.16.0,<2.0.0",
-        "packaging",
-        "boto3>=1.10.32",
-    ]
+INSTALL_REQUIRES = [
+    "protobuf>=3.6.0",
+    "numpy>1.16.0,<2.0.0",
+    "packaging",
+    "boto3>=1.10.32",
+    "pyinstrument>=3.1.3",
+]
 
 
 def compile_summary_protobuf():

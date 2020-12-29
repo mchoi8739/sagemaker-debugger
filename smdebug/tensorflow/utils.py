@@ -6,11 +6,27 @@ from typing import Callable, List, Optional
 
 # Third Party
 import tensorflow as tf
+import tensorflow.compat.v1 as tf_v1
 from packaging import version
 from tensorflow.python.distribute import values
 
 # First Party
 from smdebug.core.modes import ModeKeys
+
+
+def does_tf_support_mixed_precision_training():
+    # The Keras mixed precision API is first available in TensorFlow 2.1.0
+    # See: https://www.tensorflow.org/guide/mixed_precision
+    return version.parse(tf.__version__) >= version.parse("2.1.0")
+
+
+def supported_tf_variables():
+    if does_tf_support_mixed_precision_training():
+        from tensorflow.python.keras.mixed_precision.experimental import autocast_variable
+
+        return tf_v1.Variable, autocast_variable.AutoCastVariable
+    else:
+        return tf_v1.Variable
 
 
 class ModelOutput:
@@ -54,6 +70,7 @@ class TFDistributionStrategy(Enum):
     HOROVOD = 1
     MIRRORED = 2
     PARAMETER_SERVER = 3
+    SMDATAPARALLEL = 4
     UNSUPPORTED = 100
 
 
@@ -339,7 +356,7 @@ def get_layer_call_fn(layer: tf.keras.layers.Layer) -> Callable[[tf.Tensor], tf.
 
     def call(inputs, *args, **kwargs) -> tf.Tensor:
         layer_input = inputs
-        layer_output = old_call_fn(inputs)
+        layer_output = old_call_fn(inputs, *args, **kwargs)
         for hook in layer._hooks:
             hook_result = hook(inputs, layer_input=layer_input, layer_output=layer_output)
             if hook_result is not None:
@@ -386,5 +403,13 @@ def is_tf_version_2x():
     return version.parse(tf.__version__) >= version.parse("2.0.0")
 
 
+def is_tf_version_2_2_x():
+    return version.parse("2.2.0") <= version.parse(tf.__version__) < version.parse("2.3.0")
+
+
 def is_tf_version_2_3_x():
-    return version.parse(tf.__version__) >= version.parse("2.3.0")
+    return version.parse("2.3.0") <= version.parse(tf.__version__) < version.parse("2.4.0")
+
+
+def is_profiler_supported_for_tf_version():
+    return is_tf_version_2_2_x() or is_tf_version_2_3_x()

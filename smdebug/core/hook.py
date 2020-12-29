@@ -38,6 +38,7 @@ from smdebug.core.reductions import get_reduction_tensor_name
 from smdebug.core.sagemaker_utils import is_sagemaker_job
 from smdebug.core.save_config import SaveConfig, SaveConfigMode
 from smdebug.core.state_store import StateStore
+from smdebug.core.tfevent.timeline_file_writer import TimelineFileWriter
 from smdebug.core.utils import (
     flatten,
     get_tb_worker,
@@ -49,6 +50,7 @@ from smdebug.core.utils import (
 )
 from smdebug.core.writer import FileWriter
 from smdebug.exceptions import InvalidCollectionConfiguration
+from smdebug.profiler.profiler_config_parser import ProfilerConfigParser
 
 try:
     from smexperiments.metrics import SageMakerFileMetricsWriter
@@ -104,6 +106,7 @@ class BaseHook:
         include_collections: Optional[List[str]] = None,
         save_all: bool = False,
         include_workers: str = "one",
+        profiler_config_parser: Optional[ProfilerConfigParser] = None,
     ):
         """
         A class used to represent the hook which gets attached to the
@@ -148,6 +151,8 @@ class BaseHook:
         include_workers: str
             makes the hook save data from all workers
 
+        profiler_config_parser: ProfilerConfigParser object
+            if passed, use this profiler configuration. by default, set up a new profiler configuration here.
         """
         self.out_dir = verify_and_get_out_dir(out_dir)
         self.tensorboard_dir = get_tensorboard_dir(
@@ -225,6 +230,15 @@ class BaseHook:
         self.mode = ModeKeys.GLOBAL
         self.mode_steps = {ModeKeys.GLOBAL: init_step}
         self.writer = None
+
+        if profiler_config_parser is None:
+            profiler_config_parser = ProfilerConfigParser()
+        profiler_config_parser.load_config()
+        self.profiler_config_parser = profiler_config_parser
+
+        self.timeline_writer = TimelineFileWriter(profiler_config_parser=profiler_config_parser)
+        self.hvd_reader = None
+        self.is_smdataparallel_profiling = False
 
         if is_sagemaker_job() and SageMakerFileMetricsWriter is not None:
             self.metrics_writer = SageMakerFileMetricsWriter()
@@ -526,11 +540,20 @@ class BaseHook:
     def close(self):
         self._cleanup()
 
+    def log_outstanding_timeline_metrics(self):
+        pass
+
     def _cleanup(self):
         self._close_writers()
 
         if self.metrics_writer:
             self.metrics_writer.close()
+        self.log_outstanding_timeline_metrics()
+        self.timeline_writer.close()
+
+        # close the Horovod file reader thread if it has been enabled
+        if self.hvd_reader and self.hvd_reader.enabled:
+            self.hvd_reader.close()
 
         training_has_ended(self.out_dir)
         if self.first_process is True:
@@ -552,6 +575,14 @@ class BaseHook:
     # Called in the internal AWS codebase to determine
     # if a particular tensor value should be saved
     def should_save_tensor_or_collection(self, tensor_name: str, collection_name: str) -> bool:
+        if self.prepared_collections is False:
+            # always return false if an attempt to save a
+            # tensor is made before the collections are prepared.
+            # this can happen if the fn is called before callbacks are init.
+            self.logger.warning(
+                "Tensors cannot be saved with smdebug before callbacks are initialized."
+            )
+            return False
         if self._is_collection_being_saved_for_step(collection_name):
             return True
         return self.is_tensor_saved_for_step(tensor_name)
@@ -692,6 +723,27 @@ class BaseHook:
                         tdata=np_value, tname=hist_name, global_step=self.step
                     )
                     break
+
+    def record_trace_events(
+        self, timestamp, training_phase="", op_name="", phase="X", duration=1, **kwargs
+    ):
+        """
+        Write trace events to the timeline.
+        :param training_phase: strings like, data_iterating, forward, backward, operations etc
+        :param op_name: more details about phase like whether dataset or iterator
+        :param phase: this is defaulted to 'X'
+        :param timestamp: start_time for the event (in seconds)
+        :param duration: any duration manually computed (in seconds)
+        :param kwargs: can be process id and thread id
+        """
+        self.timeline_writer.write_trace_events(
+            training_phase=training_phase,
+            op_name=op_name,
+            phase=phase,
+            timestamp=timestamp,
+            duration=duration,
+            **kwargs,
+        )
 
     def _write_scalars(self):
         """
@@ -940,6 +992,7 @@ class CallbackHook(BaseHook):
         include_collections: Optional[List[str]] = None,
         save_all: bool = False,
         include_workers: str = "one",
+        profiler_config_parser=None,
     ):
         super().__init__(
             collection_manager=collection_manager,
@@ -955,6 +1008,7 @@ class CallbackHook(BaseHook):
             include_collections=include_collections,
             save_all=save_all,
             include_workers=include_workers,
+            profiler_config_parser=profiler_config_parser,
         )
         self.exported_collections = False
         self.data_type_name = data_type_name
