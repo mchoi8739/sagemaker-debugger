@@ -3,26 +3,38 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to smdebug test's documentation!
+Welcome to SMDebug test's documentation!
 ===============================================
 
-.. toctree::
-   :maxdepth: 2
-   :caption: Introduction to smdebug:
-
-   README.md
+|codecov| |PyPI|
 
 .. toctree::
    :maxdepth: 2
-   :caption: Frameworks:
+   :caption: Introduction to SMDebug:
 
-   smdebug.mxnet
-   smdebug.pytorch
-   smdebug.tensorflow
-   smdebug.xgboost
+   README
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Supported Frameworks:
+
+   tensorflow
+   pytorch
+   mxnet
+   xgboost
+   .. smdebug.mxnet
+   .. smdebug.pytorch
+   .. smdebug.tensorflow
+   .. smdebug.xgboost
 
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
 
    smdebug
+
+
+.. |codecov| image:: https://codecov.io/gh/awslabs/sagemaker-debugger/branch/master/graph/badge.svg
+  :target: https://codecov.io/gh/awslabs/sagemaker-debugger
+.. |PyPI| image:: https://badge.fury.io/py/smdebug.svg
+  :target: https://badge.fury.io/py/smdebug

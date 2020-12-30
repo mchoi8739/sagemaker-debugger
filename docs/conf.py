@@ -30,14 +30,14 @@ autodoc_mock_imports = ["mxnet", "tensorflow", "torch", "xgboost", "protobuf"]
 # ones.
 extensions = [
     "recommonmark",
-    "sphinx.ext.autodoc"
-    #"sphinx.ext.doctest",
-    #"sphinx.ext.intersphinx",
-    #"sphinx.ext.todo",
-    #"sphinx.ext.coverage",
-    #"sphinx.ext.autosummary",
-    #"sphinx.ext.napoleon",
-    #"sphinx.ext.autosectionlabel"
+    "sphinx.ext.autodoc",
+    "sphinx.ext.doctest",
+    "sphinx.ext.intersphinx",
+    "sphinx.ext.todo",
+    "sphinx.ext.coverage",
+    "sphinx.ext.autosummary",
+    "sphinx.ext.napoleon",
+    "sphinx.ext.autosectionlabel"
 ]
 
 # Markdown support
