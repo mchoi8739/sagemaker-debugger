@@ -24,14 +24,11 @@ import setuptools
 # First Party
 import smdebug
 
-docs_env = os.environ.get("READTHEDOCS")
-
 DOCLINES = (__doc__ or "").split("\n")
 FRAMEWORKS = ["tensorflow", "pytorch", "mxnet", "xgboost"]
 TESTS_PACKAGES = ["pytest", "torchvision", "pandas"]
 INSTALL_REQUIRES = [
-    "tensorflow<=2.3.1",
-    "protobuf==3.7.1",
+    "protobuf>=3.6.0",
     "numpy>1.16.0,<2.0.0",
     "packaging",
     "boto3>=1.10.32",
@@ -115,11 +112,6 @@ def scan_git_secrets():
     git("secrets", "--install")
     git("secrets", "--register-aws")
     return git("secrets", "--scan", "-r")
-
-
-if docs_env == "False":
-    if scan_git_secrets() != 0:
-        sys.exit(1)
 
 
 def detect_smdebug_version():
