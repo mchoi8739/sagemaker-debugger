@@ -94,7 +94,6 @@ if compile_summary_protobuf() != 0:
             "unzip -o protoc-3.7.1-linux-x86_64.zip -d /home/docs/checkouts/readthedocs.org/user_builds/local include/*"
         )
         os.system("rm -f protoc-3.7.1-linux-x86_64.zip")
-    sys.exit(1)
 
 
 def scan_git_secrets():
