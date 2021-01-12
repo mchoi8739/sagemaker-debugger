@@ -238,10 +238,10 @@ Returns
 '''''''
 
 ``list[str]``: List of strings representing names of tensors matching
-the given arguments. Arguments are processed as follows: get the list of
-tensor names for given step and mode, saved for given step matching all
-the given arguments, i.e. intersection of tensors matching each of the
-parameters.
+  the given arguments. Arguments are processed as follows: get the list of
+  tensor names for given step and mode, saved for given step matching all
+  the given arguments, i.e. intersection of tensors matching each of the
+  parameters.
 
 Examples
 ''''''''
