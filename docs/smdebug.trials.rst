@@ -1,13 +1,7 @@
 smdebug.trials package
 ======================
 
-.. currentmodule:: smdebug.trials
-
-
-smdebug.trials.create_trial module
-----------------------------------
-
-.. autoclass:: smdebug.trials.create_trial
+.. automodule:: smdebug.trials.util
   :members:
   :undoc-members:
   :show-inheritance:
@@ -109,7 +103,7 @@ from other steps.
 smdebug.trials.trial module
 ---------------------------
 
-.. autoclass:: smdebug.trials.Trial
+.. autoclass:: smdebug.trials.trial.Trial
    :members:
    :undoc-members:
    :show-inheritance:
