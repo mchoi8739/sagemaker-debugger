@@ -18,15 +18,14 @@ import smdebug
 curr_path = os.path.dirname(os.path.abspath(os.path.expanduser(__file__)))
 sys.path.insert(0, os.path.join(curr_path, '..'))
 sys.path.insert(0, os.path.abspath('../smdebug'))
-sys.path.insert(0, os.path.abspath('../smdebug.trials'))
 
 # -- Project information -----------------------------------------------------
 
 project = 'smdebug-apidoc-test'
-copyright = '2020, Miyoung Choi'
-author = 'Miyoung Choi'
+copyright = '2021, AWS DeepLearning Team'
+author = 'AWS DeepLearning Team'
 
-autodoc_mock_imports = ["mxnet", "tensorflow", "torch", "xgboost", "protobuf"]
+autodoc_mock_imports = ["mxnet", "tensorflow", "torch", "xgboost", "protobuf==3.7.1"]
 
 # -- General configuration ---------------------------------------------------
 

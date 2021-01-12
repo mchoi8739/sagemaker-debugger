@@ -7,7 +7,7 @@ smdebug.trials.Trial module
    :show-inheritance:
 
 smdebug.trials.create_trial module
----------------------------
+----------------------------------
 
 .. automodule:: smdebug.trials.create_trial
    :members:
