@@ -1,12 +1,12 @@
 sphinx==3.1.1
 sphinx-rtd-theme==0.5.0
+ipython
+protobuf
 tensorflow
 torch
 torchvision
 mxnet
 xgboost
-protobuf
-numpy
 packaging
 boto3
 pandas
