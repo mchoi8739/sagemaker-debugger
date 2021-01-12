@@ -1,34 +1,15 @@
-smdebug.trials package
-======================
-
-smdebug.trials.local\_trial module
-----------------------------------
-
-.. automodule:: smdebug.trials.local_trial
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-smdebug.trials.s3\_trial module
--------------------------------
-
-.. automodule:: smdebug.trials.s3_trial
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-smdebug.trials.trial module
+smdebug.trials.Trial module
 ---------------------------
 
-.. automodule:: smdebug.trials.trial
+.. automodule:: smdebug.trials.Trial
    :members:
    :undoc-members:
    :show-inheritance:
 
-smdebug.trials.utils module
+smdebug.trials.create_trial module
 ---------------------------
 
-.. automodule:: smdebug.trials.utils
+.. automodule:: smdebug.trials.create_trial
    :members:
    :undoc-members:
    :show-inheritance:

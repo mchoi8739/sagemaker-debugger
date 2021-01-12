@@ -28,7 +28,7 @@ Welcome to SMDebug test's documentation!
   :caption: Contents:
 
   smdebug.rules
-  smdebug.trial
+  smdebug.trials
   smdebug.analysis
 
 .. toctree::
@@ -38,15 +38,7 @@ Welcome to SMDebug test's documentation!
   smdebug.profiler.analysis
   smdebug.profiler.analysis.utils
   smdebug.profiler.analysis.notebook_utils
-
-smdebug.exceptions module
--------------------------
-
-.. automodule:: smdebug.exceptions
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
+  smdebug.exceptions
 
 .. |codecov| image:: https://codecov.io/gh/awslabs/sagemaker-debugger/branch/master/graph/badge.svg
   :target: https://codecov.io/gh/awslabs/sagemaker-debugger
