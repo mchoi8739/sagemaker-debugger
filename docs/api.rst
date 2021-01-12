@@ -996,6 +996,8 @@ of the following values:
 Frameworks
 ----------
 
-For details on what’s supported for different framework, go here: \*
-`TensorFlow <tensorflow.md>`__ \* `PyTorch <pytorch.md>`__ \*
-`MXNet <mxnet.md>`__ \* `XGBoost <xgboost.md>`__
+For details on what’s supported for different frameworks, see:
+  - :doc:`TensorFlow <tensorflow>`
+  - :doc:`PyTorch <pytorch>`
+  - :doc:`MXNet <mxnet>`
+  - :doc:`XGBoost <xgboost>`

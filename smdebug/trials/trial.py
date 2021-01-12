@@ -43,6 +43,7 @@ class Trial(ABC):
     'check', 'range_steps', 'collection_manager', 'loaded_all_steps', 'cache', 'path',
     'index_tensors_dict', 'index_mode', 'last_event_token', 'last_index_token', 'index_reader',
     'dynamic_refresh', 'trial_dir']
+
     """
 
     def __init__(
@@ -543,6 +544,7 @@ class Trial(ABC):
         :param step: str
         :param mode: ModeKeys.GLOBAL
         :return: StepState
+
         """
         all_steps = self.steps(mode=mode, show_incomplete_steps=True)
         bisect_idx = bisect_left(all_steps, step)
@@ -591,6 +593,7 @@ class Trial(ABC):
                 we update the last_index_token and last_complete_step by (window_size_limit // 2)
         :param new_index_token:
         :return:None
+
         """
         if self.last_index_token is None:
             last_index_token_step = 0
