@@ -272,7 +272,7 @@ specified and create a ``CloudWatch`` event that tracks the status of
 the Rule, so you can take any action based on them.
 
 If you want additional configuration and control, see `Running SageMaker
-jobs with Debugger <sagemaker.md>`__ for more information.
+jobs with Debugger <sagemaker>`__ for more information.
 
 Run Debugger in custom container
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -352,12 +352,12 @@ SageMaker Debugger in Action
    number of parameters down to 6 million, and start sacrificing the
    accuracy afterwards.
 
-|Debugger Iterative Model Pruning using ResNet| Debugger provides you
-tools to access such training process and have a complete control over
-your model. See `Using SageMaker Debugger and SageMaker Experiments for
-iterative model
-pruning <https://github.com/awslabs/amazon-sagemaker-examples/blob/master/sagemaker-debugger/pytorch_iterative_model_pruning/iterative_model_pruning_resnet.ipynb>`__
-notebook for the full example and more information.
+  |Debugger Iterative Model Pruning using ResNet| Debugger provides you
+  tools to access such training process and have a complete control over
+  your model. See `Using SageMaker Debugger and SageMaker Experiments for
+  iterative model
+  pruning <https://github.com/awslabs/amazon-sagemaker-examples/blob/master/sagemaker-debugger/pytorch_iterative_model_pruning/iterative_model_pruning_resnet.ipynb>`__
+  notebook for the full example and more information.
 
 -  Use Debugger with XGBoost in SageMaker Studio to save feature
    importance values and plot them in a notebook during training.
@@ -407,6 +407,6 @@ This library is licensed under the Apache 2.0 License.
    :target: https://codecov.io/gh/awslabs/sagemaker-debugger
 .. |PyPI| image:: https://badge.fury.io/py/smdebug.svg
    :target: https://badge.fury.io/py/smdebug
-.. |Debugger Iterative Model Pruning using ResNet| image:: resources/results_resnet.png?raw=true
-.. |Debugger XGBoost Visualization Example| image:: resources/xgboost_feature_importance.png?raw=true
-.. |Debugger TensorFlow Visualization Example| image:: resources/tensorflow_rules_loss.png?raw=true
+.. |Debugger Iterative Model Pruning using ResNet| image:: resources/results_resnet.png
+.. |Debugger XGBoost Visualization Example| image:: resources/xgboost_feature_importance.png
+.. |Debugger TensorFlow Visualization Example| image:: resources/tensorflow_rules_loss.png

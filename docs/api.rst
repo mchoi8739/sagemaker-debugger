@@ -339,10 +339,10 @@ Note that ``smd`` import below translates to
 |                       | `tensor_name (str)``, | tensors. The          |
 |                       | ``tens                | ``re                  |
 |                       | or_value (numpy.array | cord_tensor_value()`` |
-|                       |  or numpy.ndarray)``, | API is deprecated in  |
+|                       | or numpy.ndarray)``,  | API is deprecated in  |
 |                       | `                     | favor or              |
 |                       | `collections_to_write | ``save_tensor()``.    |
-|                       |  (str or list[str])`` |                       |
+|                       | (str or list[str])``  |                       |
 +-----------------------+-----------------------+-----------------------+
 
 TensorFlow specific Hook API

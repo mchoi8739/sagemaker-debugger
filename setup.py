@@ -36,7 +36,6 @@ INSTALL_REQUIRES = [
     "packaging",
     "boto3>=1.10.32",
     "pyinstrument>=3.1.3",
-    "bokeh",
 ]
 
 

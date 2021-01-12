@@ -22,16 +22,32 @@ Welcome to SMDebug test's documentation!
    pytorch
    mxnet
    xgboost
-   .. smdebug.mxnet
-   .. smdebug.pytorch
-   .. smdebug.tensorflow
-   .. smdebug.xgboost
 
 .. toctree::
-   :maxdepth: 2
-   :caption: Contents:
+  :maxdepth: 2
+  :caption: Contents:
 
-   smdebug
+  smdebug.rules
+  smdebug.rules.action
+  smdebug.trials
+  smdebug.profiler
+  smdebug.analysis
+  smdebug.profiler.analysis
+
+.. toctree::
+  :maxdepth: 4
+
+  smdebug.profiler.analysis.notebook_utils
+  smdebug.profiler.analysis.utils
+  smdebug
+
+smdebug.exceptions module
+-------------------------
+
+.. automodule:: smdebug.exceptions
+   :members:
+   :undoc-members:
+   :show-inheritance:
 
 
 .. |codecov| image:: https://codecov.io/gh/awslabs/sagemaker-debugger/branch/master/graph/badge.svg
