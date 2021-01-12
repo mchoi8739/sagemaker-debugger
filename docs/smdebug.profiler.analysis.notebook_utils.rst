@@ -1,9 +1,6 @@
 smdebug.profiler.analysis.notebook\_utils package
 =================================================
 
-Submodules
-----------
-
 smdebug.profiler.analysis.notebook\_utils.heatmap module
 --------------------------------------------------------
 
@@ -48,15 +45,6 @@ smdebug.profiler.analysis.notebook\_utils.training\_job module
 --------------------------------------------------------------
 
 .. automodule:: smdebug.profiler.analysis.notebook_utils.training_job
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-
-Module contents
----------------
-
-.. automodule:: smdebug.profiler.analysis.notebook_utils
    :members:
    :undoc-members:
    :show-inheritance:

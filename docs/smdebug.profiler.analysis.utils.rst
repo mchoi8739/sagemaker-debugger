@@ -1,9 +1,6 @@
 smdebug.profiler.analysis.utils package
 =======================================
 
-Submodules
-----------
-
 smdebug.profiler.analysis.utils.merge\_timelines module
 -------------------------------------------------------
 
@@ -40,15 +37,6 @@ smdebug.profiler.analysis.utils.pytorch\_dataloader\_analysis module
 --------------------------------------------------------------------
 
 .. automodule:: smdebug.profiler.analysis.utils.pytorch_dataloader_analysis
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-
-Module contents
----------------
-
-.. automodule:: smdebug.profiler.analysis.utils
    :members:
    :undoc-members:
    :show-inheritance:

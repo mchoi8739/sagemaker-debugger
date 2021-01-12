@@ -16,7 +16,7 @@ Welcome to SMDebug test's documentation!
 
 .. toctree::
    :maxdepth: 2
-   :caption: Supported Frameworks:
+   :caption: SMDebug Hooks for Frameworks:
 
    tensorflow
    pytorch
@@ -28,7 +28,7 @@ Welcome to SMDebug test's documentation!
   :caption: Contents:
 
   smdebug.rules
-  smdebug.trials
+  smdebug.trial
   smdebug.analysis
 
 .. toctree::
