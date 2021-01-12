@@ -1,10 +1,11 @@
 smdebug.trials package
 ======================
 
-.. automodule:: smdebug.trials.util
-  :members:
-  :undoc-members:
-  :show-inheritance:
+.. testsetup:: *
+
+  from smdebug.trials import create_trial, Trial
+
+.. automethod:: smdebug.trials.create_trial
 
 Trial is an object which lets you query for tensors for a given training
 job, specified by the path where smdebug’s artifacts are saved. Trial is
