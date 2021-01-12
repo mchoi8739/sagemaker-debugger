@@ -15,11 +15,3 @@ smdebug.analysis.utils module
    :members:
    :undoc-members:
    :show-inheritance:
-
-smdebug.analysis module
------------------------------
-
-.. automodule:: smdebug.analysis
-   :members:
-   :undoc-members:
-   :show-inheritance:
