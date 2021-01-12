@@ -28,15 +28,14 @@ Welcome to SMDebug test's documentation!
   :caption: Contents:
 
   smdebug.rules
-  smdebug.rules.action
   smdebug.trials
-  smdebug.profiler
   smdebug.analysis
-  smdebug.profiler.analysis
 
 .. toctree::
   :maxdepth: 4
 
+  smdebug.profiler
+  smdebug.profiler.analysis
   smdebug.profiler.analysis.notebook_utils
   smdebug.profiler.analysis.utils
   smdebug

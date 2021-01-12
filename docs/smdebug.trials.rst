@@ -1,9 +1,6 @@
 smdebug.trials package
 ======================
 
-Submodules
-----------
-
 smdebug.trials.local\_trial module
 ----------------------------------
 

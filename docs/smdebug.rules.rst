@@ -1,17 +1,6 @@
 smdebug.rules package
 =====================
 
-Subpackages
------------
-
-.. toctree::
-   :maxdepth: 4
-
-   smdebug.rules.action
-
-Submodules
-----------
-
 smdebug.rules.req\_tensors module
 ---------------------------------
 
