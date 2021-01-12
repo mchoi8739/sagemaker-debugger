@@ -1,3 +1,6 @@
+smdebug.trials package
+=====================
+
 smdebug.trials.Trial module
 ---------------------------
 
