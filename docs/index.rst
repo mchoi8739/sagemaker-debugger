@@ -36,9 +36,8 @@ Welcome to SMDebug test's documentation!
 
   smdebug.profiler
   smdebug.profiler.analysis
-  smdebug.profiler.analysis.notebook_utils
   smdebug.profiler.analysis.utils
-  smdebug
+  smdebug.profiler.analysis.notebook_utils
 
 smdebug.exceptions module
 -------------------------
