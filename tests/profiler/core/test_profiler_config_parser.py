@@ -6,6 +6,7 @@ import time
 # Third Party
 import pytest
 from tests.profiler.resources.profiler_config_parser_utils import (
+    build_metrics_config,
     current_step,
     current_time,
     dataloader_test_cases,
@@ -15,6 +16,7 @@ from tests.profiler.resources.profiler_config_parser_utils import (
 )
 
 # First Party
+from smdebug.core.config_validator import ConfigValidator, reset_config_validator
 from smdebug.profiler.profiler_config_parser import MetricsCategory, ProfilerConfigParser
 from smdebug.profiler.profiler_constants import (
     CLOSE_FILE_INTERVAL_DEFAULT,
@@ -25,35 +27,8 @@ from smdebug.profiler.profiler_constants import (
 
 
 @pytest.fixture
-def detailed_profiler_config_path(config_folder, monkeypatch):
-    config_path = os.path.join(config_folder, "detailed_profiler_config.json")
-    monkeypatch.setenv("SMPROFILER_CONFIG_PATH", config_path)
-    yield config_path
-    if os.path.isfile(config_path):
-        os.remove(config_path)
-
-
-@pytest.fixture
-def dataloader_profiler_config_path(config_folder, monkeypatch):
-    config_path = os.path.join(config_folder, "dataloader_profiler_config.json")
-    monkeypatch.setenv("SMPROFILER_CONFIG_PATH", config_path)
-    yield config_path
-    if os.path.isfile(config_path):
-        os.remove(config_path)
-
-
-@pytest.fixture
-def python_profiler_config_path(config_folder, monkeypatch):
-    config_path = os.path.join(config_folder, "python_profiler_config.json")
-    monkeypatch.setenv("SMPROFILER_CONFIG_PATH", config_path)
-    yield config_path
-    if os.path.isfile(config_path):
-        os.remove(config_path)
-
-
-@pytest.fixture
-def smdataparallel_profiler_config_path(config_folder, monkeypatch):
-    config_path = os.path.join(config_folder, "smdataparallel_profiler_config.json")
+def profiler_config_path(config_folder, monkeypatch):
+    config_path = os.path.join(config_folder, "profiler_config.json")
     monkeypatch.setenv("SMPROFILER_CONFIG_PATH", config_path)
     yield config_path
     if os.path.isfile(config_path):
@@ -122,37 +97,25 @@ def new_time_profiler_config_parser_path(config_folder):
     return os.path.join(config_folder, "new_time_profiler_config_parser.json")
 
 
-def _convert_to_string(item):
-    return '"{0}"'.format(item) if isinstance(item, str) else item
-
-
-def _convert_key_and_value(key, value):
-    return "{0}: {1}, ".format(_convert_to_string(key), _convert_to_string(value))
-
-
 @pytest.mark.parametrize("test_case", detailed_profiling_test_cases)
-def test_detailed_profiling_ranges(detailed_profiler_config_path, test_case):
+def test_detailed_profiling_ranges(profiler_config_path, test_case):
     profiling_parameters, expected_enabled, expected_can_save, expected_values = test_case
     start_step, num_steps, start_time, duration = profiling_parameters
-    detailed_profiler_config = "{"
-    if start_step:
-        detailed_profiler_config += _convert_key_and_value("StartStep", start_step)
-    if num_steps:
-        detailed_profiler_config += _convert_key_and_value("NumSteps", num_steps)
-    if start_time:
-        detailed_profiler_config += _convert_key_and_value("StartTimeInSecSinceEpoch", start_time)
-    if duration:
-        detailed_profiler_config += _convert_key_and_value("DurationInSeconds", duration)
-    detailed_profiler_config += "}"
+    detailed_profiling_config = build_metrics_config(
+        StartStep=start_step,
+        NumSteps=num_steps,
+        StartTimeInSecSinceEpoch=start_time,
+        DurationInSeconds=duration,
+    )
 
     full_config = {
         "ProfilingParameters": {
             "ProfilerEnabled": True,
-            "DetailedProfilingConfig": detailed_profiler_config,
+            "DetailedProfilingConfig": detailed_profiling_config,
         }
     }
 
-    with open(detailed_profiler_config_path, "w") as f:
+    with open(profiler_config_path, "w") as f:
         json.dump(full_config, f)
 
     profiler_config_parser = ProfilerConfigParser()
@@ -175,24 +138,21 @@ def test_detailed_profiling_ranges(detailed_profiler_config_path, test_case):
 
 
 @pytest.mark.parametrize("test_case", dataloader_test_cases)
-def test_dataloader_profiling_ranges(detailed_profiler_config_path, test_case):
+def test_dataloader_profiling_ranges(profiler_config_path, test_case):
     profiling_parameters, expected_enabled, expected_can_save, expected_values = test_case
     start_step, metrics_regex, metrics_name = profiling_parameters
-    dataloader_config = "{"
-    if start_step:
-        dataloader_config += _convert_key_and_value("StartStep", start_step)
-    if metrics_regex:
-        dataloader_config += _convert_key_and_value("MetricsRegex", metrics_regex)
-    dataloader_config += "}"
+    dataloader_profiling_config = build_metrics_config(
+        StartStep=start_step, MetricsRegex=metrics_regex
+    )
 
     full_config = {
         "ProfilingParameters": {
             "ProfilerEnabled": True,
-            "DataloaderProfilingConfig": dataloader_config,
+            "DataloaderProfilingConfig": dataloader_profiling_config,
         }
     }
 
-    with open(detailed_profiler_config_path, "w") as f:
+    with open(profiler_config_path, "w") as f:
         json.dump(full_config, f)
 
     profiler_config_parser = ProfilerConfigParser()
@@ -214,28 +174,24 @@ def test_dataloader_profiling_ranges(detailed_profiler_config_path, test_case):
 
 
 @pytest.mark.parametrize("test_case", python_profiling_test_cases)
-def test_python_profiling_ranges(python_profiler_config_path, test_case):
+def test_python_profiling_ranges(profiler_config_path, test_case):
     profiling_parameters, expected_enabled, expected_can_save, expected_values = test_case
     start_step, num_steps, profiler_name, cprofile_timer = profiling_parameters
-    python_profiler_config = "{"
-    if start_step is not None:
-        python_profiler_config += _convert_key_and_value("StartStep", start_step)
-    if num_steps is not None:
-        python_profiler_config += _convert_key_and_value("NumSteps", num_steps)
-    if profiler_name is not None:
-        python_profiler_config += _convert_key_and_value("ProfilerName", profiler_name)
-    if cprofile_timer is not None:
-        python_profiler_config += _convert_key_and_value("cProfileTimer", cprofile_timer)
-    python_profiler_config += "}"
+    python_profiling_config = build_metrics_config(
+        StartStep=start_step,
+        NumSteps=num_steps,
+        ProfilerName=profiler_name,
+        cProfileTimer=cprofile_timer,
+    )
 
     full_config = {
         "ProfilingParameters": {
             "ProfilerEnabled": True,
-            "PythonProfilingConfig": python_profiler_config,
+            "PythonProfilingConfig": python_profiling_config,
         }
     }
 
-    with open(python_profiler_config_path, "w") as f:
+    with open(profiler_config_path, "w") as f:
         json.dump(full_config, f)
 
     profiler_config_parser = ProfilerConfigParser()
@@ -258,25 +214,20 @@ def test_python_profiling_ranges(python_profiler_config_path, test_case):
 
 
 @pytest.mark.parametrize("test_case", smdataparallel_profiling_test_cases)
-def test_smdataparallel_profiling_ranges(smdataparallel_profiler_config_path, test_case):
+def test_smdataparallel_profiling_ranges(profiler_config_path, test_case):
     profiling_parameters, expected_enabled, expected_can_save, expected_values = test_case
     start_step, num_steps = profiling_parameters
 
-    smdataparallel_profiler_config = "{"
-    if start_step:
-        smdataparallel_profiler_config += _convert_key_and_value("StartStep", start_step)
-    if num_steps:
-        smdataparallel_profiler_config += _convert_key_and_value("NumSteps", num_steps)
-    smdataparallel_profiler_config += "}"
+    smdataparallel_profiling_config = build_metrics_config(StartStep=start_step, NumSteps=num_steps)
 
     full_config = {
         "ProfilingParameters": {
             "ProfilerEnabled": True,
-            "SMDataparallelProfilingConfig": smdataparallel_profiler_config,
+            "SMDataparallelProfilingConfig": smdataparallel_profiling_config,
         }
     }
 
-    with open(smdataparallel_profiler_config_path, "w") as f:
+    with open(profiler_config_path, "w") as f:
         json.dump(full_config, f)
 
     profiler_config_parser = ProfilerConfigParser()
@@ -510,3 +461,36 @@ def test_update_disabled_profiler_config_parser(
     assert profiler_config_parser.config.detailed_profiling_config.is_enabled()
     assert profiler_config_parser.config.detailed_profiling_config.start_step == 10
     assert profiler_config_parser.config.detailed_profiling_config.num_steps == 5
+
+
+@pytest.fixture(autouse=True)
+def cleanup():
+    yield
+    import smdebug.core.utils
+
+    global _is_using_smmodelparallel
+    smdebug.core.utils._is_using_smmodelparallel = None
+    os.environ.pop("USE_SMDEBUG", None)
+    os.environ.pop("SM_HPS", None)
+    reset_config_validator()
+
+
+@pytest.fixture()
+def set_up_smprofiler_detail_config_path(monkeypatch):
+    config_path = "tests/core/json_configs/test_pytorch_profiler_config_parser.json"
+    monkeypatch.setenv("SMPROFILER_CONFIG_PATH", config_path)
+
+
+@pytest.mark.parametrize("smp_config", ['{"mp_parameters":{"partitions": 2}}', "{}"])
+def test_disabling_detailed_profiler(set_up_smprofiler_detail_config_path, smp_config):
+    # The pytest fails without following reset of global variable.
+    import smdebug.core.utils
+
+    global _is_using_smmodelparallel
+    smdebug.core.utils._is_using_smmodelparallel = None
+    os.environ["SM_HPS"] = smp_config
+    profiler_config_parser = ProfilerConfigParser()
+    ConfigValidator.validate_profiler_config(profiler_config_parser)
+    assert profiler_config_parser.config.detailed_profiling_config.disabled == (
+        "mp_parameters" in smp_config
+    )
