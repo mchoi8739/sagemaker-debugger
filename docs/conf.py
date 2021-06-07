@@ -21,11 +21,11 @@ sys.path.insert(0, os.path.abspath('../smdebug'))
 
 # -- Project information -----------------------------------------------------
 
-project = 'smdebug-apidoc-test'
-copyright = '2021, AWS DeepLearning Team'
-author = 'AWS DeepLearning Team'
+project = 'SMDebug Documentation'
+copyright = '2021, AWS Deep Engine Team'
+author = 'AWS Deep Engine Team'
 
-autodoc_mock_imports = ["mxnet", "tensorflow", "torch", "xgboost", "protobuf==3.7.1"]
+autodoc_mock_imports = ["mxnet", "tensorflow", "torch", "xgboost"]
 
 # -- General configuration ---------------------------------------------------
 
