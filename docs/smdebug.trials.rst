@@ -44,10 +44,14 @@ There are two types of trials you can create: LocalTrial or S3Trial
 depending on the path. We provide a wrapper method to create the
 appropriate trial.
 
-The parameters you have to provide are: - ``path``: path can be a local
+The parameters you have to provide are:
+
+- ``path``: path can be a local
 path or an S3 path of the form ``s3://bucket/prefix``. You should see
 directories such as ``collections``, ``events`` and ``index`` at this
-path once the training job starts. - ``name``: name can be any string.
+path once the training job starts.
+
+- ``name``: name can be any string.
 It is to help you manage different trials. This is an optional
 parameter, which defaults to the basename of the path if not passed.
 Please make sure to give it a unique name to prevent confusion.
@@ -81,11 +85,14 @@ You can optionally pass ``range_steps`` to restrict your analysis to a
 certain range of steps. Note that if you do so, Trial will not load data
 from other steps.
 
-*Examples*
+**Examples**
 
 - ``range_steps=(100, None)``: This will load all steps after 100
+
 - ``range_steps=(None, 100)``: This will load all steps before 100
+
 - ``range_steps=(100, 200)`` : This will load steps between 100 and 200
+
 - ``range_steps=None``: This will load all steps
 
 .. code:: python
@@ -100,40 +107,10 @@ from other steps.
 smdebug.trials.trial module
 ---------------------------
 
-.. autoclass:: smdebug.trials.trial.Trial
+.. autoclass:: smdebug.trials.trial
    :members:
    :undoc-members:
    :show-inheritance:
-
--  `Trial API <#Trial-API>`__
-
-  -  `tensor_names <#tensor_names>`__
-  -  `tensor <#tensor>`__
-  -  `has_tensor <#has_tensor>`__
-  -  `steps <#steps>`__
-  -  `modes <#modes>`__
-  -  `mode <#mode>`__
-  -  `mode_step <#mode_step>`__
-  -  `global_step <#global_step>`__
-  -  `workers <#workers>`__
-  -  `collections <#collections>`__
-  -  `collection <#collection>`__
-  -  `wait_for_steps <#wait_for_steps>`__
-  -  `has_passed_step <#has_passed_step>`__
-
--  `Tensor <#Tensor-1>`__
-
-  -  `Tensor API <#Tensor-API>`__
-
-    -  `steps <#steps-1>`__
-    -  `value <#value>`__
-    -  `reduction_value <#reduction_value>`__
-    -  `shape <#shape>`__
-    -  `values <#values>`__
-    -  `reduction_values <#reduction_values>`__
-    -  `shapes <#shapes>`__
-    -  `workers <#workers-1>`__
-    -  `prev_steps <#prev_steps>`__
 
 
 
@@ -212,14 +189,17 @@ any of these arguments as keyword arguments.
   particular step, pass the step number as an integer. This step number
   will be treated as step number corresponding to the mode passed
   below. By default it is treated as global step.
+
 -  ``mode (smdebug.modes enum value)`` If you want to retrieve the list
   of tensors saved for a particular mode, pass the mode here as
   ``smd.modes.TRAIN``, ``smd.modes.EVAL``, ``smd.modes.PREDICT``, or
   ``smd.modes.GLOBAL``.
+
 -  ``regex (str or list[str])`` You can filter tensors matching regex
   expressions by passing a regex expressions as a string or list of
   strings. You can only pass one of ``regex`` or ``collection``
   parameters.
+
 -  ``collection (Collection or str)`` You can filter tensors belonging
   to a collection by either passing a collection object or the name of
   collection as a string. You can only pass one of ``regex`` or
