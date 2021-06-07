@@ -1,4 +1,7 @@
 # Third Party
+# Standard Library
+from functools import lru_cache
+
 import numpy as np
 import torch
 from packaging import version
@@ -6,6 +9,9 @@ from packaging import version
 # First Party
 from smdebug.core.reduction_config import ALLOWED_NORMS, ALLOWED_REDUCTIONS
 from smdebug.core.reductions import get_numpy_reduction
+
+# Cached Pytorch Version
+PT_VERSION = version.parse(torch.__version__)
 
 
 def get_reduction_of_data(reduction_name, tensor_data, tensor_name, abs=False):
@@ -37,25 +43,41 @@ def get_reduction_of_data(reduction_name, tensor_data, tensor_name, abs=False):
     raise RuntimeError("Invalid reduction_name {0}".format(reduction_name))
 
 
+@lru_cache(maxsize=1)
 def is_pt_1_5():
     """
     Determine whether the version of torch is 1.5.x
     :return: bool
     """
-    return version.parse("1.5.0") <= version.parse(torch.__version__) < version.parse("1.6.0")
+    return version.parse("1.5.0") <= PT_VERSION < version.parse("1.6.0")
 
 
+@lru_cache(maxsize=1)
 def is_pt_1_6():
     """
     Determine whether the version of torch is 1.6.x
     :return: bool
     """
-    return version.parse("1.6.0") <= version.parse(torch.__version__) < version.parse("1.7.0")
+    return version.parse("1.6.0") <= PT_VERSION < version.parse("1.7.0")
 
 
+@lru_cache(maxsize=1)
 def is_pt_1_7():
     """
     Determine whether the version of torch is 1.7.x
     :return: bool
     """
-    return version.parse("1.7.0") <= version.parse(torch.__version__) < version.parse("1.8.0")
+    return version.parse("1.7.0") <= PT_VERSION < version.parse("1.8.0")
+
+
+@lru_cache(maxsize=1)
+def is_pt_1_8():
+    """
+    Determine whether the version of torch is 1.8.x
+    :return: bool
+    """
+    return version.parse("1.8.0") <= PT_VERSION < version.parse("1.9.0")
+
+
+def is_current_version_supported(pytorch_version=torch.__version__):
+    return version.parse("1.5.0") <= version.parse(pytorch_version) < version.parse("1.9.0")

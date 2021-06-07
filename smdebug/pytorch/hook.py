@@ -11,16 +11,19 @@ import torch.distributed as dist
 from smdebug.core.collection import DEFAULT_PYTORCH_COLLECTIONS, CollectionKeys
 from smdebug.core.hook import CallbackHook
 from smdebug.core.json_config import DEFAULT_WORKER_NAME
-from smdebug.core.utils import check_smdataparallel_env, make_numpy_array
+from smdebug.core.utils import (
+    FRAMEWORK,
+    check_smdataparallel_env,
+    error_handling_agent,
+    make_numpy_array,
+)
 from smdebug.profiler.hvd_trace_file_rotation import HvdTraceFileRotation
-from smdebug.profiler.profiler_config_parser import MetricsCategory, ProfilerConfigParser
+from smdebug.profiler.profiler_config_parser import MetricsCategory, get_profiler_config_parser
 from smdebug.profiler.profiler_constants import CONVERT_TO_MICROSECS
-from smdebug.profiler.python_profile_utils import StepPhase, mode_keys_to_python_profile_mode
-from smdebug.profiler.python_profiler import PythonProfiler
 from smdebug.profiler.utils import start_smdataparallel_profiler, stop_smdataparallel_profiler
 from smdebug.pytorch.collection import CollectionManager
 from smdebug.pytorch.singleton_utils import set_hook
-from smdebug.pytorch.utils import get_reduction_of_data, is_pt_1_5, is_pt_1_6, is_pt_1_7
+from smdebug.pytorch.utils import get_reduction_of_data, is_pt_1_5, is_pt_1_6, is_pt_1_7, is_pt_1_8
 
 # smdistributed.dataparallel should be invoked via `mpirun`.
 # It supports EC2 machines with 8 GPUs per machine.
@@ -35,15 +38,8 @@ if check_smdataparallel_env():
 DEFAULT_INCLUDE_COLLECTIONS = [CollectionKeys.LOSSES]
 
 
-python_profiler = None
-
-# Enable python profiling if profiling is enabled.
-profiler_config_parser = ProfilerConfigParser()
-if profiler_config_parser.profiling_enabled:
-    config = profiler_config_parser.config
-    if config.python_profiling_config.is_enabled():
-        python_profiler = PythonProfiler.get_python_profiler(config, "pytorch")
-        python_profiler.start_profiling(StepPhase.START)
+profiler_config_parser = get_profiler_config_parser(FRAMEWORK.PYTORCH)
+profiler_config_parser.start_pre_step_zero_python_profiling()  # Enable python profiling if profiling is enabled.
 
 
 class Hook(CallbackHook):
@@ -67,6 +63,7 @@ class Hook(CallbackHook):
         def update_end_time(self, end_time=time.time()):
             self.end_time = end_time
 
+    @error_handling_agent.catch_smdebug_errors()
     def __init__(
         self,
         out_dir=None,
@@ -84,6 +81,7 @@ class Hook(CallbackHook):
         super().__init__(
             collection_manager=collection_manager,
             default_include_collections=DEFAULT_INCLUDE_COLLECTIONS,
+            profiler_config_parser=profiler_config_parser,
             data_type_name=torch.Tensor.__name__,
             out_dir=out_dir,
             export_tensorboard=export_tensorboard,
@@ -95,7 +93,6 @@ class Hook(CallbackHook):
             include_collections=include_collections,
             save_all=save_all,
             include_workers=include_workers,
-            profiler_config_parser=profiler_config_parser,
         )
         # mapping of module objects to their names,
         # useful in forward hook for logging input/output of modules
@@ -124,8 +121,7 @@ class Hook(CallbackHook):
             else torch.autograd.ProfilerState.CPU
         )
         self.use_cuda = torch.cuda.is_available()
-        if python_profiler:
-            atexit.register(python_profiler.stop_profiling, StepPhase.END)
+        atexit.register(self.profiler_config_parser.stop_post_hook_close_python_profiling)
 
     def log_trace_event(self, event):
         self.record_trace_events(
@@ -260,11 +256,18 @@ class Hook(CallbackHook):
     def _collect_torch_profiling_data_if_profiler_enabled(self):
         if self.autograd_profiler_enabled is False:
             return
-        records = torch.autograd._disable_profiler()
+        if is_pt_1_8():
+            records = torch.autograd._disable_profiler_legacy()
+        else:
+            records = torch.autograd._disable_profiler()
         self.autograd_profiler_enabled = False
         if is_pt_1_7():
             function_events = torch.autograd.profiler.EventList(
                 torch.autograd.profiler.parse_event_records(records), use_cuda=self.use_cuda
+            )
+        elif is_pt_1_8():
+            function_events = torch.autograd.profiler.EventList(
+                torch.autograd.profiler.parse_legacy_records(records), use_cuda=self.use_cuda
             )
         else:
             function_events = torch.autograd.profiler.EventList(
@@ -272,16 +275,21 @@ class Hook(CallbackHook):
             )
 
         for index, event in enumerate(function_events):
+            if is_pt_1_8():
+                cpu_time = event.time_range.start + self.start_profiler_time_us
+                duration = event.time_range.elapsed_us() / float(CONVERT_TO_MICROSECS)
+            else:
+                cpu_time = event.cpu_interval.start + self.start_profiler_time_us
+                # event.cpu_interval.start is in microseconds
+                duration = event.cpu_interval.elapsed_us() / float(CONVERT_TO_MICROSECS)
+            # timestamp is expected in seconds for record_trace_events
+            timestamp = cpu_time / float(CONVERT_TO_MICROSECS)
             self.record_trace_events(
                 training_phase="cpu_functions",
                 op_name=event.name,
                 phase="X",
-                # event.cpu_interval.start is in microseconds
-                timestamp=(event.cpu_interval.start + self.start_profiler_time_us)
-                / float(
-                    CONVERT_TO_MICROSECS
-                ),  # timestamp expected is in seconds for record_trace_events
-                duration=event.cpu_interval.elapsed_us() / float(CONVERT_TO_MICROSECS),
+                timestamp=timestamp,
+                duration=duration,
                 tid=event.thread,
                 step_num=self.step,
                 device="cpu",
@@ -301,10 +309,11 @@ class Hook(CallbackHook):
                     event_name=event.name,
                     device=k.device,
                     start_cpu_thread=event.thread,
-                    cpu_thread_start_time=event.cpu_interval.start + self.start_profiler_time_us,
+                    cpu_thread_start_time=cpu_time,
                 )
 
     # This hook is invoked by trainer prior to running the forward pass.
+    @error_handling_agent.catch_smdebug_errors()
     def forward_pre_hook(self, module, inputs):
         # Write the gradients of the past step if the writer is still available.
         if self.writer is not None:
@@ -345,25 +354,12 @@ class Hook(CallbackHook):
         )
 
         self.profiler_config_parser.load_config()
+        self.profiler_config_parser.handle_step_start_python_profiling(self.mode, self.step)
 
-        # Disable python profiling if the python profiler is currently profiling.
-        if python_profiler:
-            python_profiler.stop_profiling(
-                StepPhase.STEP_START,
-                end_mode=mode_keys_to_python_profile_mode(self.mode),
-                end_step=self.step,
-            )
-            python_profiler.stop_profiling(StepPhase.STEP_START, self.step)
-            if self.profiler_config_parser.should_save_metrics(
-                MetricsCategory.PYTHON_PROFILING, self.step
-            ):
-                python_profiler.start_profiling(
-                    StepPhase.STEP_START,
-                    start_mode=mode_keys_to_python_profile_mode(self.mode),
-                    start_step=self.step,
-                )
-
-        if self.autograd_profiler_enabled:
+        if (
+            self.autograd_profiler_enabled
+            and not self.profiler_config_parser.config.detailed_profiling_config.disabled
+        ):
             self._collect_torch_profiling_data_if_profiler_enabled()
 
         # should we re-enable profiling for this step?
@@ -380,6 +376,11 @@ class Hook(CallbackHook):
             elif is_pt_1_7():
                 torch.autograd._enable_profiler(
                     torch.autograd.ProfilerConfig(self.profiler, False, False, False)
+                )
+                self.start_profiler_time_us = time.time() * CONVERT_TO_MICROSECS
+            elif is_pt_1_8():
+                torch.autograd._enable_profiler_legacy(
+                    torch.autograd.ProfilerConfig(self.profiler, False, False, False, False)
                 )
                 self.start_profiler_time_us = time.time() * CONVERT_TO_MICROSECS
             elif is_pt_1_6():
@@ -418,6 +419,7 @@ class Hook(CallbackHook):
 
         self.first_forward_submodule_name = None
 
+    @error_handling_agent.catch_smdebug_errors()
     def record_tensor_value(self, tensor_name: str, tensor_value: torch.Tensor) -> None:
         """Used for registering functional directly, such as F.mse_loss()."""
         assert isinstance(
@@ -427,6 +429,7 @@ class Hook(CallbackHook):
         self._write_outputs(tensor_name, tensor_value)
 
     # This hook is invoked by trainer after running the forward pass.
+    @error_handling_agent.catch_smdebug_errors()
     def forward_hook(self, module, inputs, outputs):
         # if this is first forward we will use start time of parent as start time, and end time as now
         cur_time = time.time()
@@ -468,6 +471,7 @@ class Hook(CallbackHook):
         self._save_custom_tensors_post_step()
         self.last_saved_step = self.step
 
+    @error_handling_agent.catch_smdebug_errors()
     def backward_hook(self, tname):
         # Helper function that has access to the parameter name via
         # the scope in which it's defined.
@@ -499,23 +503,12 @@ class Hook(CallbackHook):
         # for compatibility with ZCC patches which call this
         self.register_module(module)
 
+    @error_handling_agent.catch_smdebug_errors()
     def fhook(self, module, inputs, outputs):
         # we would stop profiling and restart from this phase
-        if python_profiler:
-            python_profiler.stop_profiling(
-                StepPhase.FORWARD_PASS_END,
-                end_mode=mode_keys_to_python_profile_mode(self.mode),
-                end_step=self.step,
-            )
-            if self.profiler_config_parser.should_save_metrics(
-                MetricsCategory.PYTHON_PROFILING, self.step
-            ):
-                python_profiler.start_profiling(
-                    StepPhase.FORWARD_PASS_END,
-                    start_mode=mode_keys_to_python_profile_mode(self.mode),
-                    start_step=self.step,
-                )
+        self.profiler_config_parser.handle_forward_pass_end_python_profiling(self.mode, self.step)
 
+    @error_handling_agent.catch_smdebug_errors()
     def bhook(self, module, grad_input, grad_output):
         now = time.time()
         backward_st_time = now
@@ -569,6 +562,7 @@ class Hook(CallbackHook):
         self.logger.info(f"Total Trainable Params: {total_params}")
         return total_params
 
+    @error_handling_agent.catch_smdebug_errors()
     def register_module(self, module):
         """
         This function registers the forward hook. If user wants to register the hook
@@ -621,6 +615,7 @@ class Hook(CallbackHook):
         self.has_registered_module = True
         self.count_parameters(module)
 
+    @error_handling_agent.catch_smdebug_errors()
     def register_loss(self, loss_module):
         """Register something like `criterion = nn.CrossEntropyLoss()`."""
         # Typechecking
@@ -636,12 +631,7 @@ class Hook(CallbackHook):
 
     def close(self):
         self._cleanup()
-        if python_profiler:
-            python_profiler.start_profiling(
-                StepPhase.STEP_END,
-                start_mode=mode_keys_to_python_profile_mode(self.mode),
-                start_step=self.mode_steps[self.mode],
-            )
+        self.profiler_config_parser.start_post_hook_close_python_profiling()
 
     def _cleanup(self):
         super()._cleanup()
@@ -656,6 +646,7 @@ class Hook(CallbackHook):
             return tensor_value.to(torch.device("cpu")).data.numpy()
         return make_numpy_array(tensor_value)
 
+    @error_handling_agent.catch_smdebug_errors(default_return_val=False)
     def should_save_dataloader_metrics(self, metrics_name):
         """Determine whether dataloader metrics for the provided metrics_name should be saved. We check for the next
         step since the dataloader metrics for the next step are collected on the current step.
