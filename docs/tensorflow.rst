@@ -19,11 +19,11 @@ Contents
 -  `Code Examples <#examples>`__
 -  `References <#references>`__
 
-SMDebug Support for TensorFlow
+SMDebug for TensorFlow
 ------------------------------
 
-Amazon SageMaker Debugger python SDK and its client library ``smdebug``
-now fully support TensorFlow 2.3 with the latest version release.
+Amazon SageMaker Debugger and the ``smdebug`` client library
+fully support TensorFlow framework.
 
 Using Debugger, you can access tensors of any kind for TensorFlow
 models, from the Keras model zoo to your own custom model, and save them
@@ -104,37 +104,22 @@ TensorFlow estimator with Debugger.
 
 .. note::
 
-   The SageMaker TensorFlow estimator and the Debugger
-   collections in the example are based on the SageMaker python SDK v2
-   and ``smdebug`` v0.9.2. It is highly recommended to upgrade the
-   packages by executing the following command line.
+  The SageMaker TensorFlow estimator and the Debugger
+  collections in the example are based on the SageMaker python SDK v2
+  and ``smdebug`` v0.9.2. It is highly recommended to upgrade the
+  packages by executing the following command line.
 
-.. code:: bash
+  .. code:: bash
 
-   pip install -U sagemaker
-   pip install -U smdebug
+    pip install -U sagemaker
+    pip install -U smdebug
 
-If you are using Jupyter Notebook, put exclamation mark at the front of
-the code lines and restart your kernel.
+  If you are using Jupyter Notebook, put exclamation mark at the front of
+  the code lines and restart your kernel. For more
+  information about the SageMaker Python SDK, see `Use Version 2.x of the
+  SageMaker Python
+  SDK <https://sagemaker.readthedocs.io/en/stable/index.html>`__.
 
-Available Tensor Collections for TensorFlow
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-**Note**: The SageMaker TensorFlow estimator and the Debugger
-collections in this example are based on the latest ``smdebug`` library.
-We highly recommend that you upgrade the packages by running the
-following commands at the command line:
-
-::
-
-   pip install -U sagemaker
-   pip install -U smdebug
-
-If you are using a Jupyter Notebook, put an exclamation mark (!) at the
-beginning of the code string and restart your kernel. For more
-information about the SageMaker Python SDK, see `Use Version 2.x of the
-SageMaker Python
-SDK <https://sagemaker.readthedocs.io/en/stable/v2.html>`__.
 
 Debugger Built-in Tensor Collections for TensorFlow
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -192,7 +177,8 @@ For a full list of available tensor collection parameters, see
 `Configuring Collection using SageMaker Python
 SDK <https://github.com/awslabs/sagemaker-debugger/blob/master/docs/api.md#configuring-collection-using-sagemaker-python-sdk>`__.
 
-   **Note**: The ``inputs``, ``outputs``, ``gradients``, and ``layers``
+.. note::
+   The ``inputs``, ``outputs``, ``gradients``, and ``layers``
    built-in collections are currently available for TensorFlow versions
    <2.0 and ==2.2.0.
 

@@ -1,8 +1,6 @@
 SMDebug: Amazon SageMaker Debugger Client Library
 =================================================
 
-|codecov| |PyPI|
-
 Table of Contents
 -----------------
 
@@ -20,30 +18,33 @@ Overview
 
 `Amazon SageMaker
 Debugger <https://docs.aws.amazon.com/sagemaker/latest/dg/train-debugger.html>`__
-automates the debugging process of machine learning training jobs. From
-training jobs, Debugger allows you to run your own training script (Zero
-Script Change experience) using Debugger built-in features—``Hook`` and
-``Rule``—to capture tensors, have flexibility to build customized Hooks
-and Rules for configuring tensors as you want, and make the tensors
-available for analysis by saving in an `Amazon
-S3 <https://aws.amazon.com/s3/?nc=sn&loc=0>`__ bucket, all through a
-flexible and powerful API.
+automates the debugging and profiling process of machine learning training.
+SageMaker Debugger provides built-in features to capture output tensors,
+monitor system utilization, and profile ML frameworks from training jobs of your own training script
+and Docker containers.
 
-The ``smdebug`` library powers Debugger by calling the saved tensors
-from the S3 bucket during the training job. ``smdebug`` retrieves and
+You have flexibility to build customized *hooks*
+for saving training data to a storage either locally or in a cloud storage such as `Amazon
+S3 <https://aws.amazon.com/s3/?nc=sn&loc=0>`__. You can also use Debugger *rules* - built-in or custom -
+to analyze the saved data, identify training issues, receive alerts,
+and take actions to stop training.
+
+The ``smdebug`` client library is an open source library that powers SageMaker Debugger
+by calling the saved training data from training jobs. ``smdebug`` retrieves and
 filters the tensors generated from Debugger such as gradients, weights,
 and biases.
 
-Debugger helps you develop better, faster, and cheaper models by
-minimally modifying estimator, tracing the tensors, catching anomalies
-while training models, and iterative model pruning.
+SageMaker Debugger helps you develop and optimize model performance and computation. It also allows to run
+training jobs minimally modifying estimators,
+tracing training data (output tensors, system metrics, and framework metrics),
+catching anomalies while training models, and iteratively pruning large models.
 
 Debugger supports TensorFlow, PyTorch, MXNet, and XGBoost frameworks.
 
 The following list is a summary of the main functionalities of Debugger:
 
--  Run and debug training jobs of your model on SageMaker when using
-   `supported containers <#debugger-supported-frameworks>`__
+-  Run, debug, and profile training jobs of your model on SageMaker when using
+   `AWS managed containers <#debugger-supported-frameworks>`__
 -  No changes needed to your training script if using AWS Deep Learning
    Containers with Debugger fully integrated
 -  Minimal changes to your training script if using AWS containers with
@@ -189,8 +190,8 @@ Debugger’s ``Hook``. For an example template of code to use Debugger on
 your own container in TensorFlow 2.x frameworks, see `Run Debugger in
 custom container <#Run-Debugger-in-custom-container>`__. See the
 following instruction pages to set up Debugger in your preferred
-framework. - `TensorFlow <tensorflow.md>`__ - `MXNet <mxnet.md>`__ -
-`PyTorch <pytorch.md>`__ - `XGBoost <xgboost.md>`__
+framework. - `TensorFlow <tensorflow.rst>`__ - `MXNet <mxnet.rst>`__ -
+`PyTorch <pytorch.rst>`__ - `XGBoost <xgboost.rst>`__
 
 Using SageMaker Debugger on custom containers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

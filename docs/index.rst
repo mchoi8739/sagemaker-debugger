@@ -20,14 +20,19 @@ Welcome to the SMDebug documentation!
 
 .. toctree::
   :maxdepth: 2
-  :caption: Contents:
+  :caption: SMDebug Rule Modules:
 
   smdebug.rules
+
+.. toctree::
+  :maxdepth: 2
+  :caption: SMDebug Modules for Output Parameter Analysis:
   smdebug.trials
   smdebug.analysis
 
 .. toctree::
   :maxdepth: 4
+  :caption: SMDebug Modules for Profiler:
 
   smdebug.profiler
   smdebug.profiler.analysis

@@ -1,7 +1,7 @@
 smdebug.trials package
 ======================
 
-.. autoclass:: smdebug.trials.utils.create_trial
+.. autoclass:: smdebug.trials.create_trial
 
 Trial is an object which lets you query for tensors for a given training
 job, specified by the path where smdebug’s artifacts are saved. Trial is
@@ -46,15 +46,14 @@ appropriate trial.
 
 The parameters you have to provide are:
 
-- ``path``: path can be a local
-path or an S3 path of the form ``s3://bucket/prefix``. You should see
-directories such as ``collections``, ``events`` and ``index`` at this
-path once the training job starts.
+- ``path`` (str): A local path or an S3 path of the form ``s3://bucket/prefix``. You should see
+  directories such as ``collections``, ``events`` and ``index`` at this
+  path once the training job starts.
 
-- ``name``: name can be any string.
-It is to help you manage different trials. This is an optional
-parameter, which defaults to the basename of the path if not passed.
-Please make sure to give it a unique name to prevent confusion.
+- ``name`` (str): A name for a trial.
+  It is to help you manage different trials. This is an optional
+  parameter, which defaults to the basename of the path if not passed.
+  Please make sure to give it a unique name to prevent confusion.
 
 Creating S3 trial
 ^^^^^^^^^^^^^^^^^
