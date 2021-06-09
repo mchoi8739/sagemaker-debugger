@@ -1,5 +1,5 @@
-smdebug.rules package
-=====================
+smdebug.rules
+=============
 
 smdebug.rules.req\_tensors module
 ---------------------------------

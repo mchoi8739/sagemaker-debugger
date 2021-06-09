@@ -1,5 +1,5 @@
-smdebug.profiler.analysis.utils package
-=======================================
+smdebug.profiler.analysis.utils
+===============================
 
 smdebug.profiler.analysis.utils.merge\_timelines module
 -------------------------------------------------------

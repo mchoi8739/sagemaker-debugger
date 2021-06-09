@@ -1,5 +1,5 @@
-smdebug.profiler.analysis package
-=================================
+smdebug.profiler.analysis
+=========================
 
 smdebug.profiler.analysis.python\_profile\_analysis module
 ----------------------------------------------------------

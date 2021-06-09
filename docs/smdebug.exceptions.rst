@@ -1,5 +1,5 @@
-smdebug.exceptions module
--------------------------
+smdebug.exceptions
+------------------
 
 .. automodule:: smdebug.exceptions
    :members:
@@ -50,7 +50,7 @@ Here are the exceptions (along with others) and their meaning:
 
 -  ``RuleEvaluationConditionMet``: This is raised when the rule
   invocation returns ``True`` for some step.
-  
+
 -  ``MissingCollectionFiles``: This is raised when no data was saved by
   the training job. Check that the ``Hook`` was configured correctly
   before starting the training job.

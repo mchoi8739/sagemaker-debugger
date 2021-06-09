@@ -20,13 +20,14 @@ Welcome to the SMDebug documentation!
 
 .. toctree::
   :maxdepth: 2
-  :caption: SMDebug Rule Modules:
+  :caption: SMDebug Modules for Rules:
 
   smdebug.rules
 
 .. toctree::
   :maxdepth: 2
-  :caption: SMDebug Modules for Output Parameter Analysis:
+  :caption: SMDebug Modules for Model Debugging:
+
   smdebug.trials
   smdebug.analysis
 
@@ -38,6 +39,11 @@ Welcome to the SMDebug documentation!
   smdebug.profiler.analysis
   smdebug.profiler.analysis.utils
   smdebug.profiler.analysis.notebook_utils
+
+.. toctree::
+  :maxdepth: 4
+  :caption: SMDebug Modules for Handling Exceptions:
+
   smdebug.exceptions
 
 .. |codecov| image:: https://codecov.io/gh/awslabs/sagemaker-debugger/branch/master/graph/badge.svg

@@ -1,13 +1,13 @@
-smdebug.trials package
-======================
+smdebug.trials
+==============
 
-.. autoclass:: smdebug.trials.create_trial
-
-Trial is an object which lets you query for tensors for a given training
+An SMDebug trial is an object which lets you query for tensors for a given training
 job, specified by the path where smdebug’s artifacts are saved. Trial is
 capable of loading new tensors as and when they become available at the
 given path, allowing you to do both offline as well as realtime
 analysis.
+
+.. autoclass:: smdebug.trials.create_trial
 
 Path of trial
 ~~~~~~~~~~~~~

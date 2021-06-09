@@ -1,5 +1,5 @@
-smdebug.profiler.analysis.notebook\_utils package
-=================================================
+smdebug.profiler.analysis.notebook\_utils
+=========================================
 
 smdebug.profiler.analysis.notebook\_utils.heatmap module
 --------------------------------------------------------

@@ -1,5 +1,5 @@
-smdebug.profiler package
-========================
+smdebug.profiler
+================
 
 smdebug.profiler.tf\_profiler\_parser module
 --------------------------------------------

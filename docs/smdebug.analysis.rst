@@ -1,5 +1,5 @@
-smdebug.analysis package
-========================
+smdebug.analysis
+================
 
 smdebug.analysis Introduction
 -----------------------------
