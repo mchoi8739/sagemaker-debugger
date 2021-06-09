@@ -1,8 +1,5 @@
-smdebug.rules
-=============
-
-SMDebug Rules
--------------
+How to Use SMDebug Rules
+========================
 
 Rules are the medium by which SageMaker Debugger executes a certain
 piece of code regularly on different steps of a training job. A rule is
@@ -14,7 +11,7 @@ Please ensure your logic respects these semantics, else you will get a
 available for future steps.
 
 Use Built-in Rules Officially Provided by SageMaker
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------------------------------
 
 Amazon SageMaker Debugger rules analyze tensors emitted during the training of a model.
 Debugger offers the Rule API operation that monitors training job progress and errors
@@ -26,14 +23,14 @@ To see a full list of available built-in rules, see
 .
 
 Write Custom Rules Within or Outside SageMaker
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------------------------
 
 Writing a rule involves implementing the `Rule
 APIs <smdebug.rules.rst#smdebug.rules\_API>`__. Below, let's start with a
 simplified version of a custom VanishingGradient rule.
 
-Constructor
-^^^^^^^^^^^
+Step 1: Construct a Rule Class
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Creating a rule involves first inheriting from the base ``Rule`` class
 provided by smdebug. For this example rule here, we do not need to look
@@ -56,8 +53,8 @@ to pass them as a comma separated string. This restriction is being
 enforced so as to let you create and invoke rules from json using
 Sagemaker’s APIs.
 
-Function to invoke at a given step
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Step 2: Create a Function to Invoke at a Step
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In this function you can implement the core logic of what you want to do
 with these tensors. It should return a boolean value ``True`` or
@@ -84,8 +81,11 @@ A simplified version of the actual invoke function for
 
 That’s it, writing a rule is as simple as that.
 
-Invoking a rule through SageMaker
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Step 3: Invoke the Rule
+~~~~~~~~~~~~~~~~~~~~~~~
+
+Option 1: Invoking a rule through SageMaker
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 After you’ve written your rule, you can ask SageMaker to evaluate the
 rule against your training job by either using SageMaker Python SDK as
@@ -128,8 +128,8 @@ in the CreateTrainingJob API request as:
       }
   ]
 
-Invoking a rule outside of SageMaker through ``invoke_rule``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Option 2: Invoking a rule outside SageMaker through ``invoke_rule``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 You might want to invoke the rule locally during development. We provide
 a function to invoke rules easily. Refer
@@ -145,8 +145,6 @@ Rule and invokes it for a series of steps one after the other.
   trial = create_trial('s3://smdebug-dev-test/mnist-job/')
   rule_obj = VanishingGradientRule(trial, threshold=0.0001)
   invoke_rule(rule_obj, start_step=0, end_step=None)
-
-.. _arguments-19:
 
 Arguments
 '''''''''
@@ -192,7 +190,7 @@ smdebug.rules.rule
 smdebug.rules.rule\_invoker
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. automodule:: smdebug.rules.rule_invoker
+.. automodule:: smdebug.rules.invoke_rule
    :members:
    :undoc-members:
    :show-inheritance:
