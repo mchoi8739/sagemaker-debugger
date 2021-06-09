@@ -1,5 +1,5 @@
-How to Use SMDebug Rules
-========================
+Rules
+=====
 
 Rules are the medium by which SageMaker Debugger executes a certain
 piece of code regularly on different steps of a training job. A rule is
@@ -26,7 +26,7 @@ Write Custom Rules Within or Outside SageMaker
 ----------------------------------------------
 
 Writing a rule involves implementing the `Rule
-APIs <smdebug.rules.rst#smdebug.rules\_API>`__. Below, let's start with a
+APIs <smdebug.rules.html#smdebug-rules-api>`__. Below, let's start with a
 simplified version of a custom VanishingGradient rule.
 
 Step 1: Construct a Rule Class
@@ -109,7 +109,7 @@ rule against your training job by either using SageMaker Python SDK as
 
 If you’re using the SageMaker API directly to evaluate the rule, then
 you can specify the rule configuration
-```DebugRuleConfigurations`` <https://docs.aws.amazon.com/sagemaker/latest/dg/API_DebugRuleConfiguration.html>`__
+`DebugRuleConfigurations <https://docs.aws.amazon.com/sagemaker/latest/dg/API_DebugRuleConfiguration.html>`__
 in the CreateTrainingJob API request as:
 
 .. code:: python
@@ -146,51 +146,19 @@ Rule and invokes it for a series of steps one after the other.
   rule_obj = VanishingGradientRule(trial, threshold=0.0001)
   invoke_rule(rule_obj, start_step=0, end_step=None)
 
-Arguments
-'''''''''
-
-- ``rule_obj (Rule)`` An instance of a subclass of
-  ``smdebug.rules.Rule`` that you want to invoke.
-
-- ``start_step (int)`` Global step number to start invoking the rule
-  from. Note that this refers to a global step. This defaults to 0.
-
-- ``end_step (int or  None)``: Global step number to end the invocation
-  of rule before. To clarify, ``end_step`` is an exclusive bound. The
-  rule is invoked at ``end_step``. This defaults to ``None`` which
-  means run till the end of the job.
-
-- ``raise_eval_cond (bool)`` This parameter controls whether to raise
-  the exception ``RuleEvaluationConditionMet`` when raised by the rule,
-  or to catch it and log the message and move to the next step.
-  Defaults to ``False``, which implies that the it catches the
-  exception, logs that the evaluation condition was met for a step and
-  moves on to evaluate the next step.
-
 
 smdebug.rules API
------------------
+=================
 
-smdebug.rules.req\_tensors
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. currentmodule:: smdebug.rules
 
-.. automodule:: smdebug.rules.req_tensors
-   :members:
-   :undoc-members:
-   :show-inheritance:
+.. autoclass:: Rule
+    :members:
+    :show-inheritance:
+    :inherited-members:
 
-smdebug.rules.rule
-~~~~~~~~~~~~~~~~~~
-
-.. automodule:: smdebug.rules.rule
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-smdebug.rules.rule\_invoker
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. automodule:: smdebug.rules.invoke_rule
-   :members:
-   :undoc-members:
-   :show-inheritance:
+.. autoclass:: invoke_rule
+    :members:
+    :undoc-members:
+    :show-inheritance:
+    :inherited-members:
