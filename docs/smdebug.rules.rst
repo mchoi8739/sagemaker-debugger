@@ -1,33 +1,8 @@
 smdebug.rules
 =============
 
-smdebug.rules.req\_tensors module
----------------------------------
-
-.. automodule:: smdebug.rules.req_tensors
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-smdebug.rules.rule module
--------------------------
-
-.. automodule:: smdebug.rules.rule
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-smdebug.rules.rule\_invoker module
-----------------------------------
-
-.. automodule:: smdebug.rules.rule_invoker
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-
-Rules
------
+SMDebug Rules
+-------------
 
 Rules are the medium by which SageMaker Debugger executes a certain
 piece of code regularly on different steps of a training job. A rule is
@@ -38,18 +13,24 @@ Please ensure your logic respects these semantics, else you will get a
 ``TensorUnavailableForStep`` exception as the data would not yet be
 available for future steps.
 
-Built In Rules
-~~~~~~~~~~~~~~
+Use Built-in Rules Officially Provided by SageMaker
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Please refer to the built-in rules that SageMaker provides
-`here <https://github.com/awslabs/sagemaker-debugger/blob/master/docs/sagemaker.md#built-in-rules>`__.
+Amazon SageMaker Debugger rules analyze tensors emitted during the training of a model.
+Debugger offers the Rule API operation that monitors training job progress and errors
+for the success of training your model. For example, the rules can detect whether gradients
+are getting too large or too small, whether a model is overfitting or overtraining,
+and whether a training job does not decrease loss function and improve.
+To see a full list of available built-in rules, see
+`List of Debugger Built-in Rules <https://docs.aws.amazon.com/sagemaker/latest/dg/debugger-built-in-rules.html>`__.
+.
 
-Writing a custom rule
-~~~~~~~~~~~~~~~~~~~~~
+Write Custom Rules Within or Outside SageMaker
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Writing a rule involves implementing the `Rule
-interface <../smdebug/rules/rule.py>`__. Below, let us look at a
-simplified version of a VanishingGradient rule.
+APIs <smdebug.rules.rst#smdebug.rules\_API>`__. Below, let's start with a
+simplified version of a custom VanishingGradient rule.
 
 Constructor
 ^^^^^^^^^^^
@@ -170,17 +151,48 @@ Rule and invokes it for a series of steps one after the other.
 Arguments
 '''''''''
 
--  ``rule_obj (Rule)`` An instance of a subclass of
+- ``rule_obj (Rule)`` An instance of a subclass of
   ``smdebug.rules.Rule`` that you want to invoke.
--  ``start_step (int)`` Global step number to start invoking the rule
+
+- ``start_step (int)`` Global step number to start invoking the rule
   from. Note that this refers to a global step. This defaults to 0.
--  ``end_step (int or  None)``: Global step number to end the invocation
+
+- ``end_step (int or  None)``: Global step number to end the invocation
   of rule before. To clarify, ``end_step`` is an exclusive bound. The
   rule is invoked at ``end_step``. This defaults to ``None`` which
   means run till the end of the job.
--  ``raise_eval_cond (bool)`` This parameter controls whether to raise
+
+- ``raise_eval_cond (bool)`` This parameter controls whether to raise
   the exception ``RuleEvaluationConditionMet`` when raised by the rule,
   or to catch it and log the message and move to the next step.
   Defaults to ``False``, which implies that the it catches the
   exception, logs that the evaluation condition was met for a step and
   moves on to evaluate the next step.
+
+
+smdebug.rules API
+-----------------
+
+smdebug.rules.req\_tensors
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. automodule:: smdebug.rules.req_tensors
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+smdebug.rules.rule
+~~~~~~~~~~~~~~~~~~
+
+.. automodule:: smdebug.rules.rule
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+smdebug.rules.rule\_invoker
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. automodule:: smdebug.rules.rule_invoker
+   :members:
+   :undoc-members:
+   :show-inheritance:

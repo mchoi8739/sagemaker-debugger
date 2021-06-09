@@ -11,7 +11,7 @@ Welcome to the SMDebug documentation!
 
 .. toctree::
    :maxdepth: 2
-   :caption: SMDebug Hooks for Frameworks:
+   :caption: How to Register SMDebug Hooks:
 
    tensorflow
    pytorch
