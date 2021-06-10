@@ -147,8 +147,8 @@ Rule and invokes it for a series of steps one after the other.
   invoke_rule(rule_obj, start_step=0, end_step=None)
 
 
-smdebug.rules API
-=================
+Rule API
+========
 
 .. currentmodule:: smdebug.rules
 
