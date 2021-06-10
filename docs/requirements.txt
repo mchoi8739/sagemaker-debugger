@@ -5,3 +5,4 @@ docutils==0.15.2
 bokeh
 smdebug
 ipython
+protobuf>=3.6.0
