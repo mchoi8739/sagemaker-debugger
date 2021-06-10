@@ -8,6 +8,7 @@ Welcome to the SMDebug documentation!
    :caption: Introduction to SMDebug
 
    README
+   release-notes
 
 .. toctree::
    :maxdepth: 2

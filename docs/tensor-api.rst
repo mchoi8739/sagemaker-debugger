@@ -16,7 +16,16 @@ representing name. It provides the following methods.
 
 .. note::
   To use the following methods, you must create a tensor object as shown
-  in the code example above.
+  in the code example above. The object name ``output_tensor`` is used as an example
+  throughout this page. You can name the object by replacing the ``output_tensor`` as you want.
+  For example, if you are logging ``nll_loss_output_0`` outputs from a PyTorch training job,
+  you can define the tensor object as following:
+
+  .. code:: python
+
+    output_loss=trial.tensor("nll_loss_output_0")
+
+  You can then replace ``output_tensor`` to ``output_loss`` to use the following methods.
 
 +---------------------------------------------+---------------------------------------+
 | Method                                      | Description                           |
