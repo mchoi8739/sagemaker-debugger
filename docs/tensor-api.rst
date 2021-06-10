@@ -42,7 +42,7 @@ representing name. It provides the following methods.
 
 
 
-.. method:: trial.tensor(tname).steps(mode=ModeKeys.GLOBAL, show_incomplete_steps=False)
+.. method:: output_tensor.steps(mode=ModeKeys.GLOBAL, show_incomplete_steps=False)
 
   Query for the steps at which the given tensor was saved
 
@@ -60,7 +60,7 @@ representing name. It provides the following methods.
 
     ``list[int]`` A list of steps at which the given tensor was saved
 
-.. method:: trial.tensor(tname).value(step_num, mode=ModeKeys.GLOBAL, worker=None)
+.. method:: output_tensor.value(step_num, mode=ModeKeys.GLOBAL, worker=None)
 
   Get the value of the tensor at a given step as a numpy array
 
@@ -83,7 +83,7 @@ representing name. It provides the following methods.
     ``numpy.ndarray`` The value of tensor at the given step and worker (if
     the training job saved data from multiple workers)
 
-.. method:: trial.tensor(tname).reduction_value(step_num, reduction_name, mode=modes.GLOBAL, worker=None, abs=False)
+.. method:: output_tensor.reduction_value(step_num, reduction_name, mode=modes.GLOBAL, worker=None, abs=False)
 
   Get the reduction value of the chosen tensor at a particular step. A
   reduction value is a tensor reduced to a single value through reduction
@@ -138,7 +138,7 @@ representing name. It provides the following methods.
     both the chosen reduction and full tensor are not available, this method
     raises ``TensorUnavailableForStep`` exception.
 
-.. method:: trial.tensor(tname).shape(step_num, mode=modes.GLOBAL, worker=None)
+.. method:: output_tensor.shape(step_num, mode=modes.GLOBAL, worker=None)
 
   Get the shape of the chosen tensor at a particular step.
 
@@ -164,7 +164,7 @@ representing name. It provides the following methods.
       today. If both the shape and full tensor are not available, this method
       raises ``TensorUnavailableForStep`` exception.
 
-.. method:: trial.tensor(tname).values(mode=modes.GLOBAL, worker=None)
+.. method:: output_tensor.values(mode=modes.GLOBAL, worker=None)
 
   Get the values of the tensor for all steps of a given mode.
 
@@ -185,7 +185,7 @@ representing name. It provides the following methods.
     ``dict[int -> numpy.ndarray]`` A dictionary with step numbers as keys
     and numpy arrays representing the value of the tensor as values.
 
-.. method:: trial.tensor(tname).reduction_values(step_num, mode=modes.GLOBAL, worker=None)
+.. method:: output_tensor.reduction_values(step_num, mode=modes.GLOBAL, worker=None)
 
   Get all reduction values saved for the chosen tensor at a particular
   step. A reduction value is a tensor reduced to a single value through
@@ -216,7 +216,7 @@ representing name. It provides the following methods.
     job. It does not compute all known reductions and return them if only
     the raw tensor was saved.
 
-.. method:: trial.tensor(tname).shapes(mode=modes.GLOBAL, worker=None)
+.. method:: output_tensor.shapes(mode=modes.GLOBAL, worker=None)
 
   Get the shapes of the tensor for all steps of a given mode.
 
@@ -237,7 +237,7 @@ representing name. It provides the following methods.
     ``dict[int -> tuple(int)]`` A dictionary with step numbers as keys and
     tuples of ints representing the shapes of the tensor as values.
 
-.. method:: trial.tensor(tname).workers(step_num, mode=modes.GLOBAL)
+.. method:: output_tensor.workers(step_num, mode=modes.GLOBAL)
 
   Get all the workers for which this tensor was saved at a given step
 
@@ -253,7 +253,7 @@ representing name. It provides the following methods.
     ``list[str]`` A list of worker names for which the tensor was saved at
     the given step.
 
-.. method:: trial.tensor(tname).prev_steps(step, n, mode=modes.GLOBAL)
+.. method:: output_tensor.prev_steps(step, n, mode=modes.GLOBAL)
 
   Get the last n step numbers of a given mode from a given step.
 
