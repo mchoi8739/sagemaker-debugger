@@ -14,11 +14,16 @@ analysis.
     :show-inheritance:
     :inherited-members:
 
-Path of trial
-~~~~~~~~~~~~~
+.. autoclass:: Trial
+    :members:
+    :show-inheritance:
+    :inherited-members:
 
-SageMaker training job
-^^^^^^^^^^^^^^^^^^^^^^
+Path to SMDebug artifacts
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+For SageMaker training job
+^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 When running a SageMaker job this path is on S3. SageMaker saves data
 from your training job locally on the training instance first and
@@ -34,8 +39,8 @@ the parameter ``S3OutputPath`` in the ``DebugHookConfig`` section of
 training_job_name and “debug-output” to it to ensure we have a unique
 path for each training job.
 
-Non SageMaker training jobs
-^^^^^^^^^^^^^^^^^^^^^^^^^^^
+For non-SageMaker training jobs
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 If you are not running a SageMaker training job, this is the path you
 pass as ``out_dir`` when you create a smdebug
