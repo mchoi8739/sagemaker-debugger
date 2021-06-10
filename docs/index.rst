@@ -33,13 +33,12 @@ Welcome to the SMDebug documentation!
   smdebug.trials
   trial-api
   tensor-api
-  smdebug.analysis
 
 .. toctree::
   :maxdepth: 4
   :caption: SMDebug Profiler Modules
 
-  smdebug.profiler
+  smdebug.profiler 
   smdebug.profiler.analysis
   smdebug.profiler.analysis.utils
   smdebug.profiler.analysis.notebook_utils
