@@ -1,12 +1,6 @@
 smdebug.analysis
 ================
 
-smdebug.analysis Introduction
------------------------------
-
-.. toctree::
-   api
-
 smdebug.analysis.utils module
 -----------------------------
 

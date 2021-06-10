@@ -12,8 +12,9 @@ Welcome to the SMDebug documentation!
 
 .. toctree::
    :maxdepth: 2
-   :caption: How to Register SMDebug Hooks
+   :caption: SMDebug Hooks
 
+   api
    tensorflow
    pytorch
    mxnet
@@ -27,7 +28,7 @@ Welcome to the SMDebug documentation!
 
 .. toctree::
   :maxdepth: 2
-  :caption: SMDebug Debugging Modules
+  :caption: SMDebug Debugger Modules
 
   smdebug.trials
   trial-api
