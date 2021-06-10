@@ -12,14 +12,24 @@ Date: June 10. 2021
 New Features
 ~~~~~~~~~~~~
 
+- PyTorch
+
+  - Support for PyTorch 1.9.0 (#501)
+
+
+Bug Fixes
+~~~~~~~~~
+
+- None
+
+
+Improvements
+~~~~~~~~~~~~
+
 - TensorFlow
 
   - Add error handling for TensorFlow v1.x (#498)
   - Add safety checks for TensorFlow v2.x error handling (#497)
-
-- PyTorch
-
-  - Enabling the support for PyTorch 1.9.0 (#501)
 
 - MXNet
 
@@ -32,12 +42,6 @@ New Features
 - Other
 
   - SMDebug engage/disengage Phase-I (#488)
-
-
-Bug Fixes
-~~~~~~~~~
-
-- None
 
 
 Known Issues
