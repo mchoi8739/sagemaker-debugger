@@ -29,6 +29,8 @@ Welcome to the SMDebug documentation!
   :caption: SMDebug Debugging Modules
 
   smdebug.trials
+  trial-api
+  tensor-api
   smdebug.analysis
 
 .. toctree::
