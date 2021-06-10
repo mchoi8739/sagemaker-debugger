@@ -7,6 +7,10 @@ parameters it requires and descriptions. If you are not familiar
 with smdebug constructs, you might want to review :doc:`SMDebug APIs <api>`
 before going through this page.
 
+.. note::
+  To use the following trial methods, you must create a trial object as guided
+  in the `SMDebug Trial <smdebug.trials>`__ page.
+
 +-----------------------------------------------------------+-----------------------------------+
 | Method                                                    | Description                       |
 +===========================================================+===================================+
