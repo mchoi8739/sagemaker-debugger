@@ -5,13 +5,13 @@ Welcome to the SMDebug documentation!
 
 .. toctree::
    :maxdepth: 2
-   :caption: Introduction to SMDebug:
+   :caption: Introduction to SMDebug
 
    README
 
 .. toctree::
    :maxdepth: 2
-   :caption: How to Register SMDebug Hooks:
+   :caption: How to Register SMDebug Hooks
 
    tensorflow
    pytorch
@@ -20,20 +20,20 @@ Welcome to the SMDebug documentation!
 
 .. toctree::
   :maxdepth: 2
-  :caption: Rules:
+  :caption: Rules
 
   smdebug.rules
 
 .. toctree::
   :maxdepth: 2
-  :caption: Model Debugging:
+  :caption: SMDebug Debugging Modules
 
   smdebug.trials
   smdebug.analysis
 
 .. toctree::
   :maxdepth: 4
-  :caption: Profiler:
+  :caption: SMDebug Profiler Modules
 
   smdebug.profiler
   smdebug.profiler.analysis
@@ -42,7 +42,7 @@ Welcome to the SMDebug documentation!
 
 .. toctree::
   :maxdepth: 4
-  :caption: Handling Exceptions:
+  :caption: Handling Exceptions
 
   smdebug.exceptions
 

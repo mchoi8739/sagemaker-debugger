@@ -1,5 +1,5 @@
-Rules
-=====
+SMDebug Rules
+=============
 
 Rules are the medium by which SageMaker Debugger executes a certain
 piece of code regularly on different steps of a training job. A rule is

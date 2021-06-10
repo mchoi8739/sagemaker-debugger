@@ -1,5 +1,5 @@
-smdebug.trials
-==============
+SMDebug Trial
+=============
 
 An SMDebug trial is an object which lets you query for tensors for a given training
 job, specified by the path where SMDebug's artifacts are saved. Trial is
@@ -7,172 +7,169 @@ capable of loading new tensors as soon as they become available from the
 given path, allowing you to do both offline as well as real-time
 analysis.
 
-.. currentmodule:: smdebug.trials
-
-.. autoclass:: create_trial
-    :members:
-    :show-inheritance:
-    :inherited-members:
-
-.. autoclass:: Trial
-    :members:
-    :show-inheritance:
-    :inherited-members:
-
 Path to SMDebug artifacts
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-For SageMaker training job
-^^^^^^^^^^^^^^^^^^^^^^^^^^
+For SageMaker training jobs
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-When running a SageMaker job this path is on S3. SageMaker saves data
-from your training job locally on the training instance first and
-uploads them to an S3 location in your account. When you start a
-SageMaker training job with the python SDK, you can control this path
-using the parameter ``s3_output_path`` in the ``DebuggerHookConfig``
-object. This is an optional parameter, if you do not pass this the
-python SDK will populate a default location for you. If you do pass
-this, make sure the bucket is in the same region as where the training
-job is running. If you’re not using the python SDK, set this path for
-the parameter ``S3OutputPath`` in the ``DebugHookConfig`` section of
-``CreateTrainingJob`` API. SageMaker takes this path and appends
-training_job_name and “debug-output” to it to ensure we have a unique
-path for each training job.
+When running a SageMaker job, SMDebug artifacts are saved to Amazon S3.
+SageMaker saves data
+from your training job to a local path of the training container and
+uploads them to an S3 bucket of your account. When you start a
+SageMaker training job with the python SDK, you can set the path
+using the parameter ``s3_output_path`` of the ``DebuggerHookConfig``
+object. If you don't specify the path, SageMaker automatically sets the
+output path to your default S3 bucket.
+
+**Example**
+
+.. code:: python
+
+  from sagemaker.debugger import CollectionConfig, DebuggerHookConfig
+
+  collection_configs=[
+      CollectionConfig(name="weights"),
+      CollectionConfig(name="gradients")
+  ]
+
+  debugger_hook_config=DebuggerHookConfig(
+    s3_output_path="specify-your-s3-bucket-uri"  # Optional
+    collection_configs=collection_configs
+  )
+
+For more information, see `Configure Debugger Hook to Save Tensors
+<https://docs.aws.amazon.com/sagemaker/latest/dg/debugger-configure-hook.html>`__
+in the *Amazon SageMaker Developer Guide*.
+
 
 For non-SageMaker training jobs
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-If you are not running a SageMaker training job, this is the path you
-pass as ``out_dir`` when you create a smdebug
-```Hook`` <api.md#hook>`__. Just like when creating the hook, you can
-pass either a local path or an S3 path (as ``s3://bucket/prefix``).
+If you are running a training job outside SageMaker, this is the path you
+pass as ``out_dir`` when you create an SMDebug Hook.
+When creating the hook, you can
+pass either a local path (for example, ``/home/ubuntu/smdebug_outputs/``)
+or an S3 bucket path (for example, ``s3://bucket/prefix``).
 
-Creating a trial object
+Creating a Trial Object
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 There are two types of trials you can create: LocalTrial or S3Trial
 depending on the path. We provide a wrapper method to create the
 appropriate trial.
 
-The parameters you have to provide are:
+.. class:: smdebug.trials.create_trial(path, name=None, profiler=False, output_dir='/opt/ml/processing/outputs/', **kwargs)
 
-- ``path`` (str): A local path or an S3 path of the form ``s3://bucket/prefix``. You should see
-  directories such as ``collections``, ``events`` and ``index`` at this
-  path once the training job starts.
+  **Parameters:**
 
-- ``name`` (str): A name for a trial.
-  It is to help you manage different trials. This is an optional
-  parameter, which defaults to the basename of the path if not passed.
-  Please make sure to give it a unique name to prevent confusion.
+  - **path** (str): A local path or an S3 path of the form ``s3://bucket/prefix``. You should see
+    directories such as ``collections``, ``events`` and ``index`` at this
+    path once the training job starts.
 
-Creating S3 trial
-^^^^^^^^^^^^^^^^^
+  - **name** (str): A name for a trial.
+    It is to help you manage different trials. This is an optional
+    parameter, which defaults to the basename of the path if not passed.
+    Please make sure to give it a unique name to prevent confusion.
 
-.. code:: python
+  **Returns:**    An SMDebug trial instance
 
- from smdebug.trials import create_trial
- trial = create_trial(
-   path='s3://smdebug-testing-bucket/outputs/resnet',
-   name='resnet_training_run'
- )
+  The following examples show how to create an SMDebug trial object.
 
-Creating local trial
-^^^^^^^^^^^^^^^^^^^^
+  **Example: Creating an S3 trial**
 
-.. code:: python
+  .. code:: python
 
- from smdebug.trials import create_trial
- trial = create_trial(
-   path='/home/ubuntu/smdebug_outputs/resnet',
-   name='resnet_training_run'
- )
+   from smdebug.trials import create_trial
+   trial = create_trial(
+     path='s3://smdebug-testing-bucket/outputs/resnet',
+     name='resnet_training_run'
+   )
 
-Restricting analysis to a range of steps
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  **Example: Creating a local trial**
 
-You can optionally pass ``range_steps`` to restrict your analysis to a
-certain range of steps. Note that if you do so, Trial will not load data
-from other steps.
+  .. code:: python
 
-**Examples**
+   from smdebug.trials import create_trial
+   trial = create_trial(
+     path='/home/ubuntu/smdebug_outputs/resnet',
+     name='resnet_training_run'
+   )
 
-- ``range_steps=(100, None)``: This will load all steps after 100
+  **Example: Restricting analysis to a range of steps**
 
-- ``range_steps=(None, 100)``: This will load all steps before 100
+  You can optionally pass ``range_steps`` to restrict your analysis to a
+  certain range of steps. Note that if you do so, Trial will not load data
+  from other steps.
 
-- ``range_steps=(100, 200)`` : This will load steps between 100 and 200
+  - ``range_steps=(100, None)``: This will load all steps after 100
 
-- ``range_steps=None``: This will load all steps
+  - ``range_steps=(None, 100)``: This will load all steps before 100
 
-.. code:: python
+  - ``range_steps=(100, 200)`` : This will load steps between 100 and 200
 
- from smdebug.trials import create_trial
- trial = create_trial(
-   path='s3://smdebug-testing-bucket/outputs/resnet',
-   name='resnet_training',
-   range_steps=(100, 200)
- )
+  - ``range_steps=None``: This will load all steps
 
-smdebug.trials.trial module
----------------------------
+  .. code:: python
 
-.. autoclass:: smdebug.trials.trial
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
+   from smdebug.trials import create_trial
+   trial = create_trial(
+     path='s3://smdebug-testing-bucket/outputs/resnet',
+     name='resnet_training',
+     range_steps=(100, 200)
+   )
 
 
 Trial API
 ~~~~~~~~~
 
-Here’s a list of methods that the Trial API provides which helps you
-load data for analysis. Please click on the method to see all the
-parameters it takes and a detailed description. If you are not familiar
+The following table shows a list of methods that the Trial object provides to help you
+load data for output tensor analysis. Click on the method to see all the
+parameters it requires and descriptions. If you are not familiar
 with smdebug constructs, you might want to review :doc:`SMDebug APIs <api>`
 before going through this page.
 
-+-----------------------------------+-----------------------------------+
-| Method                            | Description                       |
-+===================================+===================================+
-| `trial.tensor_names()             | See names of all tensors          |
-| <#tensor_names>`__                | available                         |
-+-----------------------------------+-----------------------------------+
-| `trial.tensor(name) <#tensor>`__  | Retrieve smdebug Tensor object    |
-+-----------------------------------+-----------------------------------+
-| `trial.has_tensor(name)           | Query for whether tensor was      |
-| <#has_tensor>`__                  | saved                             |
-+-----------------------------------+-----------------------------------+
-| `trial.steps() <#steps>`__        | Query steps for which data was    |
-|                                   | saved                             |
-+-----------------------------------+-----------------------------------+
-| `trial.modes() <#modes>`__        | Query modes for which data was    |
-|                                   | saved                             |
-+-----------------------------------+-----------------------------------+
-| `trial.mode(step) <#mode>`__      | Query the mode for a given global |
-|                                   | step                              |
-+-----------------------------------+-----------------------------------+
-| `trial.global_step(mode,          | Query global step for a given     |
-| step) <#global_step>`__           | step and mode                     |
-+-----------------------------------+-----------------------------------+
-| `trial.mode_step(step)            | Query the mode step for a given   |
-| <#mode_step>`__                   | global step                       |
-+-----------------------------------+-----------------------------------+
-| `trial.workers() <#workers>`__    | Query list of workers from the    |
-|                                   | data saved                        |
-+-----------------------------------+-----------------------------------+
-| `trial.collections()              | Query list of collections saved   |
-| <#collections>`__                 | from the training job             |
-+-----------------------------------+-----------------------------------+
-| `trial.collection(name)           | Retrieve a single collection      |
-| <#collection>`__                  | saved from the training job       |
-+-----------------------------------+-----------------------------------+
-| `trial.wait_for_steps(steps)      | Wait till the requested steps are |
-| <#wait_for_steps>`__              | available                         |
-+-----------------------------------+-----------------------------------+
-| `trial.has_passed_step(step)      | Query whether the requested step  |
-| <#has_passed_step>`__             | is available                      |
-+-----------------------------------+-----------------------------------+
++---------------------------------------------------+-----------------------------------+
+| Method                                            | Description                       |
++===================================================+===================================+
+| `trial.tensor_names() <#tensor_names>`__          | See names of all tensors          |
+|                                                   | available                         |
++---------------------------------------------------+-----------------------------------+
+| `trial.tensor(name) <#tensor>`__                  | Retrieve smdebug Tensor object    |
++---------------------------------------------------+-----------------------------------+
+| `trial.has_tensor(name) <#has_tensor>`__          | Query for whether tensor was      |
+|                                                   | saved                             |
++---------------------------------------------------+-----------------------------------+
+| `trial.steps() <#steps>`__                        | Query steps for which data was    |
+|                                                   | saved                             |
++---------------------------------------------------+-----------------------------------+
+| `trial.modes() <#modes>`__                        | Query modes for which data was    |
+|                                                   | saved                             |
++---------------------------------------------------+-----------------------------------+
+| `trial.mode(step) <#mode>`__                      | Query the mode for a given global |
+|                                                   | step                              |
++---------------------------------------------------+-----------------------------------+
+| `trial.global_step(mode,step) <#global_step>`__   | Query global step for a given     |
+|                                                   | step and mode                     |
++---------------------------------------------------+-----------------------------------+
+| `trial.mode_step(step) <#mode_step>`__            | Query the mode step for a given   |
+|                                                   | global step                       |
++---------------------------------------------------+-----------------------------------+
+| `trial.workers() <#workers>`__                    | Query list of workers from the    |
+|                                                   | data saved                        |
++---------------------------------------------------+-----------------------------------+
+| `trial.collections() <#collections>`__            | Query list of collections saved   |
+|                                                   | from the training job             |
++---------------------------------------------------+-----------------------------------+
+| `trial.collection(name) <#collection>`__          | Retrieve a single collection      |
+|                                                   | saved from the training job       |
++---------------------------------------------------+-----------------------------------+
+| `trial.wait_for_steps(steps) <#wait_for_steps>`__ | Wait till the requested steps are |
+|                                                   | available                         |
++---------------------------------------------------+-----------------------------------+
+| `trial.has_passed_step(step) <#has_passed_step>`__| Query whether the requested step  |
+|                                                   | is available                      |
++---------------------------------------------------+-----------------------------------+
 
 tensor_names
 ^^^^^^^^^^^^
