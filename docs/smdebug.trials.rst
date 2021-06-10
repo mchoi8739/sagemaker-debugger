@@ -2,12 +2,17 @@ smdebug.trials
 ==============
 
 An SMDebug trial is an object which lets you query for tensors for a given training
-job, specified by the path where smdebug’s artifacts are saved. Trial is
-capable of loading new tensors as and when they become available at the
-given path, allowing you to do both offline as well as realtime
+job, specified by the path where SMDebug's artifacts are saved. Trial is
+capable of loading new tensors as soon as they become available from the
+given path, allowing you to do both offline as well as real-time
 analysis.
 
-.. autoclass:: smdebug.trials.create_trial
+.. currentmodule:: smdebug.trials
+
+.. autoclass:: create_trial
+    :members:
+    :show-inheritance:
+    :inherited-members:
 
 Path of trial
 ~~~~~~~~~~~~~

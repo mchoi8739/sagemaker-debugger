@@ -20,20 +20,20 @@ Welcome to the SMDebug documentation!
 
 .. toctree::
   :maxdepth: 2
-  :caption: SMDebug Modules for Rules:
+  :caption: Rules:
 
   smdebug.rules
 
 .. toctree::
   :maxdepth: 2
-  :caption: SMDebug Modules for Model Debugging:
+  :caption: Model Debugging:
 
   smdebug.trials
   smdebug.analysis
 
 .. toctree::
   :maxdepth: 4
-  :caption: SMDebug Modules for Profiler:
+  :caption: Profiler:
 
   smdebug.profiler
   smdebug.profiler.analysis
@@ -42,7 +42,7 @@ Welcome to the SMDebug documentation!
 
 .. toctree::
   :maxdepth: 4
-  :caption: SMDebug Modules for Handling Exceptions:
+  :caption: Handling Exceptions:
 
   smdebug.exceptions
 
