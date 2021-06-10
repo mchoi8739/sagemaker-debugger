@@ -14,31 +14,35 @@ representing name. It provides the following methods.
   )
   output_tensor=trial.tensor(tname)
 
-+-------------------------------+---------------------------------------+
-| Method                        | Description                           |
-+===============================+=======================================+
-| `steps() <#steps-1>`__        | Query steps for which tensor was      |
-|                               | saved                                 |
-+-------------------------------+---------------------------------------+
-| `value(step) <#value>`__      | Get the value of the tensor at a      |
-|                               | given step as a numpy array           |
-+-------------------------------+---------------------------------------+
-| `reduction_value(step)        | Get the reduction value of the chosen |
-| <#reduction_value>`__         | tensor at a particular step           |
-+-------------------------------+---------------------------------------+
-| `reduction_values             | Get all reduction values saved for    |
-| (step) <#reduction_values>`__ | the chosen tensor at a particular     |
-|                               | step                                  |
-+-------------------------------+---------------------------------------+
-| `values(mode) <#values>`__    | Get the values of the tensor for all  |
-|                               | steps of a given mode                 |
-+-------------------------------+---------------------------------------+
-| `workers(step)                | Get all the workers for which this    |
-| <#workers-1>`__               | tensor was saved at a given step      |
-+-------------------------------+---------------------------------------+
-| `prev_steps(step,             | Get the last n step numbers of a      |
-| n) <#prev_steps>`__           | given mode from a given step          |
-+-------------------------------+---------------------------------------+
+.. note::
+  To use the following methods, you must create a tensor object as shown
+  in the code example above.
+
++---------------------------------------------+---------------------------------------+
+| Method                                      | Description                           |
++=============================================+=======================================+
+| `steps() <#output_tensor.steps>`__          | Query steps for which tensor was      |
+|                                             | saved                                 |
++---------------------------------------------+---------------------------------------+
+| `value(step) <#output_tensor.value>`__      | Get the value of the tensor at a      |
+|                                             | given step as a numpy array           |
++---------------------------------------------+---------------------------------------+
+| `reduction_value(step)                      | Get the reduction value of the chosen |
+| <#output_tensor.reduction_value>`__         | tensor at a particular step           |
++---------------------------------------------+---------------------------------------+
+| `reduction_values                           | Get all reduction values saved for    |
+| (step) <#output_tensor.reduction_values>`__ | the chosen tensor at a particular     |
+|                                             | step                                  |
++---------------------------------------------+---------------------------------------+
+| `values(mode) <#output_tensor.values>`__    | Get the values of the tensor for all  |
+|                                             | steps of a given mode                 |
++---------------------------------------------+---------------------------------------+
+| `workers(step)                              | Get all the workers for which this    |
+| <#output_tensor.workers>`__                 | tensor was saved at a given step      |
++---------------------------------------------+---------------------------------------+
+| `prev_steps(step,                           | Get the last n step numbers of a      |
+| n) <#output_tensor.prev_steps>`__           | given mode from a given step          |
++---------------------------------------------+---------------------------------------+
 
 
 
