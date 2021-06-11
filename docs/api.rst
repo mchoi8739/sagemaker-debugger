@@ -1,5 +1,5 @@
-Saving Tensors API
-==================
+Hook API
+========
 
 -  `Glossary <#glossary>`__
 -  `Hook <#hook>`__
@@ -102,25 +102,16 @@ Creating a Hook
 ~~~~~~~~~~~~~~~
 
 By using AWS Deep Learning Containers, you can directly run your own
-training script without any additional effort to make it compatible with
+training scripts without any additional effort to make it compatible with
 the SageMaker Python SDK. For a detailed developer guide for this, see
 `Use Debugger in AWS
 Containers <https://docs.aws.amazon.com/sagemaker/latest/dg/debugger-container.html>`__.
 
 However, for some advanced use cases where you need access to customized
 tensors from targeted parts of a training script, you can manually
-construct the hook object. The smdebug library provides hook classes to
+construct the hook object. The SMDebug library provides hook classes to
 make this process simple and compatible with the SageMaker ecosystem and
 Debugger.
-
-Hook when using the SageMaker Python SDK
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-If you create a SageMaker job and specify the hook configuration in the
-SageMaker Estimator API as described in `AWS
-Docs <https://docs.aws.amazon.com/sagemaker/latest/dg/train-model.html>`__,
-the CreateTrainingJob API operation containing the hook configuration
-will be automatically written to the training container.
 
 To capture tensors from your training model, paste the following code to
 the top or the main function of the training script.
@@ -145,14 +136,18 @@ For more information about constructing the hook depending on a
 framework of your choice and adding the hooks to your model, see the
 following pages.
 
--  `TensorFlow
-   hook <tensorflow>`__
--  `MXNet
-   hook <mxnet>`__
--  `PyTorch
-   hook <pytorch>`__
--  `XGBoost
-   hook <xgboost>`__
+-  :doc:`TensorFlow <tensorflow>`
+-  :doc:`MXNet hook <mxnet>`
+-  :doc:`PyTorch hook <pytorch>`
+-  :doc:`XGBoost hook <xgboost>`
+
+.. toctree::
+   :maxdepth: 2
+   
+   tensorflow
+   pytorch
+   mxnet
+   xgboost
 
 Configuring Hook using SageMaker Python SDK
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

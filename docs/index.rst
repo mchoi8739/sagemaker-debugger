@@ -14,11 +14,10 @@ Welcome to the SMDebug documentation!
    :maxdepth: 2
    :caption: SMDebug Hooks
 
-   api
-   tensorflow
-   pytorch
-   mxnet
-   xgboost
+   hook-api
+   hook-methods
+   collections
+   hook-config-in-smestimator
 
 .. toctree::
   :maxdepth: 2
@@ -35,19 +34,24 @@ Welcome to the SMDebug documentation!
   tensor-api
 
 .. toctree::
-  :maxdepth: 4
+  :maxdepth: 2
   :caption: SMDebug Profiler Modules
 
-  smdebug.profiler 
+  smdebug.profiler
   smdebug.profiler.analysis
   smdebug.profiler.analysis.utils
   smdebug.profiler.analysis.notebook_utils
 
 .. toctree::
-  :maxdepth: 4
+  :maxdepth: 2
   :caption: Handling Exceptions
 
   smdebug.exceptions
+
+.. toctree::
+  :maxdepth: 1
+
+  glossary
 
 .. |codecov| image:: https://codecov.io/gh/awslabs/sagemaker-debugger/branch/master/graph/badge.svg
   :target: https://codecov.io/gh/awslabs/sagemaker-debugger

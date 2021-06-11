@@ -41,7 +41,8 @@ Improvements
 
 - Other
 
-  - SMDebug engage/disengage Phase-I (#488)
+  - Error handling updates for SMDebug to not disrupt training jobs using the default configurations.
+    This improvement is to not fail training jobs due to an error in SMDebug or its dependencies.
 
 
 Known Issues
@@ -49,7 +50,11 @@ Known Issues
 
 - PyTorch
 
-  - The autograd based detailed profiling is not supported for PyTorch 1.9.0
+  - The autograd based detailed profiling is not supported for PyTorch 1.9.0.
+
+- SMDebug has a fixed range of framework versions that it supports for TensorFlow and PyTorch.
+
+- Detailed profiling is not supported for training jobs with SageMaker distributed model parallel.
 
 
 Migration to Deep Learning Containers
