@@ -85,7 +85,7 @@ These methods are common for all hooks in any framework.
 
   Sets mode of the job. ``smd.modes.TRAIN``,
   ``smd.modes.EVAL``, ``smd.modes.PREDICT``, ``smd.modes.GLOBAL``.
-  For more information, see `Modes <#modes>`__.
+  For more information, see :doc:`Modes <smdebug.modes>`__.
 
   **Parameters:**
 
