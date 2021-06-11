@@ -1,11 +1,14 @@
 Hook from Python constructor
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-See the framework-specific pages for more details.
+Using the Hook
 
-HookClass below can be one of ``KerasHook``, ``SessionHook``,
-``EstimatorHook`` for TensorFlow, or is just ``Hook`` for MXNet, Pytorch
-and XGBoost.
+.. autoclass:: smdebug.core.hook.BaseHook
+  :members:
+  :undoc-members:
+  :show-inheritance:
+  :inherited-members:
+
 
 .. code:: python
 
