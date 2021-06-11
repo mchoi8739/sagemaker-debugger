@@ -25,9 +25,9 @@ operation, ``DebuggerHookConfig``.
     )
 
 Hook Configuration Parameter Keys
----------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The available hook parameters are listed in the following. The meaning
+The available ``hook_parameters`` keys are listed in the following. The meaning
 of these parameters will be clear as you review the sections of
 documentation below. Note that all parameters below have to be strings.
 So for any parameter which accepts a list (such as save_steps,

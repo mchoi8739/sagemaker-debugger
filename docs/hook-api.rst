@@ -1,32 +1,6 @@
 Hook API
 ========
 
--  `Glossary <#glossary>`__
--  `Hook <#hook>`__
-
-   -  `Creating a Hook <#creating-a-hook>`__
-
-      -  `Hook when using SageMaker Python
-         SDK <#hook-when-using-sagemaker-python-sdk>`__
-      -  `Configuring Hook using SageMaker Python
-         SDK <#configuring-hook-using-sagemaker-python-sdk>`__
-      -  `Hook from Python
-         constructor <#hook-from-python-constructor>`__
-
-   -  `Common Hook API <#common-hook-api>`__
-   -  `TensorFlow specific Hook API <#tensorflow-specific-hook-api>`__
-   -  `MXNet specific Hook API <#mxnet-specific-hook-api>`__
-   -  `PyTorch specific Hook API <#pytorch-specific-hook-api>`__
-
--  `Modes <#modes>`__
--  `Collection <#collection>`__
--  `SaveConfig <#saveconfig>`__
--  `ReductionConfig <#reductionconfig>`__
-
-
-
-----
-
 Create a Hook
 -------------
 
@@ -40,10 +14,11 @@ However, for some advanced use cases where you need access to customized
 tensors from targeted parts of a training script, you can manually
 construct the hook object. The SMDebug library provides hook classes to
 make this process simple and compatible with the SageMaker ecosystem and
-Debugger. The high-level workflow is as following:
+Debugger. The high-level workflow is as simple as a 2-step process:
 
 1. Register SMDebug hook to your training script.
 2. Run a training job within or outside SageMaker.
+
    - SageMaker APIs for Debugger are available through the SageMaker Python SDK or API.
    - Run it locally
 
@@ -65,6 +40,3 @@ framework of your choice, see the following pages.
    mxnet
    xgboost
    hook-constructor
-
-
---------------

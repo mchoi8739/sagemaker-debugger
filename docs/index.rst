@@ -18,6 +18,7 @@ Welcome to the SMDebug documentation!
    hook-methods
    collections
    hook-config-in-smestimator
+   other-configs
 
 .. toctree::
   :maxdepth: 2
@@ -32,6 +33,7 @@ Welcome to the SMDebug documentation!
   smdebug.trials
   trial-api
   tensor-api
+  smdebug.modes
 
 .. toctree::
   :maxdepth: 2

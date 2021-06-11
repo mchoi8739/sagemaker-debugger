@@ -6,56 +6,134 @@ Common Hook Methods
 
 These methods are common for all hooks in any framework.
 
-Note that ``smd`` import below translates to
-``import smdebug.{framework} as smd``.
+.. note::
 
-.. list-table:: Title
-  :widths: 25 25 50
-  :header-rows: 1
+  The methods in this page are available after you create a hook object.
 
-  * - Method
-    - Arguments
-    - Behavior
-  * - ``add_collection(collection)``
-    - ``collection (smd.Collection)``
-    - Takes a Collection object and adds it to the CollectionManager that the
-      Hook holds. Note that you should only pass in a Collection object for the
-      same framework as the hook
-  * - ``get_collection(name)``
-    - ``name (str)``
-    - Returns collection identified by the given name
-  * - ``get_collections()``
-    -
-    - Returns all collection objects held by the hook
-  * - ``set_mode(mode)``
+  - **TensorFlow**
+
+    .. code:: python
+
+      import smdebug.tensorflow as smd
+      hook = smd.KerasHook.create_from_json_file()
+      hook = smd.SessionHook.create_from_json_file()
+      hook = smd.EstimatorHook.create_from_json_file()
+
+    In case of TensorFlow, you need to pick the appropriate ``HookClass`` among
+    ``KerasHook``, ``SessionHook``, and ``EstimatorHook`` depending on how your training script
+    is composed. For more information, see :doc:`TensorFlow Hook <tensorflow>`.
+
+
+  - **PyTorch**
+
+    .. code:: python
+
+      import smdebug.pytorch as smd
+      hook = smd.Hook.create_from_json_file()
+
+  - **MXNet**
+
+    .. code:: python
+
+      import smdebug.mxnet as smd
+      hook = smd.Hook.create_from_json_file()
+
+  - **XGBoost**
+
+    .. code:: python
+
+      import smdebug.xgboost as smd
+      hook = smd.Hook.create_from_json_file()
+
+
+.. method:: add_collection(collection)
+
+  Takes a Collection object and adds it to the CollectionManager that the
+  Hook holds. Note that you should only pass in a Collection object for the
+  same framework as the hook
+
+  **Parameters:**
+
+    - collection (smd.Collection)
+
+
+.. method:: add_collection(collection)
+
+  Takes a Collection object and adds it to the CollectionManager that the
+  Hook holds. Note that you should only pass in a Collection object for the
+  same framework as the hook
+
+  **Parameters:**
+
+    - collection (smd.Collection)
+
+
+.. method:: get_collection(name)
+
+  Returns collection identified by the given name
+
+  **Parameters:**
+
+    - name (str)
+
+.. method:: get_collections()
+
+  Returns all collection objects held by the hook
+
+
+.. method:: set_mode(mode)
+
+  Sets mode of the job. ``smd.modes.TRAIN``,
+  ``smd.modes.EVAL``, ``smd.modes.PREDICT``, ``smd.modes.GLOBAL``.
+  For more information, see `Modes <#modes>`__.
+
+  **Parameters:**
+
     - value of the enum ``smd.modes``
-    - Sets mode of the job. ``smd.modes.TRAIN``,
-      ``smd.modes.EVAL``, ``smd.modes.PREDICT``, ``smd.modes.GLOBAL``.
-      For more information, see `Modes <#modes>`__.
-  * - ``create_from_json_file(json_file_path (str)``
-    - ``json_file_path (str)``
-    - Takes the path of a file which holds the json configuration of the hook,
-      and creates hook from that configuration. This is an optional parameter.
-      If this is not passed it tries to get the file path from the value of the
-      environment variable SMDEB UG_CONFIG_FILE_PATH and defaults to
-      ``/opt/ml/input/config/debughookconfig.json``.
-      When training on SageMaker you do not have to specify any path because
-      this is the default path that SageMaker writes the hook configuration to.
-  * - ``close()``
-    -
-    - Closes all files that are currently open by the hook
-  * - ``save_scalar()``
+
+.. method:: create_from_json_file(json_file_path (str)
+
+  Takes the path of a file which holds the json configuration of the hook,
+  and creates hook from that configuration. This is an optional parameter.
+  If this is not passed it tries to get the file path from the value of the
+  environment variable SMDEB UG_CONFIG_FILE_PATH and defaults to
+  ``/opt/ml/input/config/debughookconfig.json``.
+  When training on SageMaker you do not have to specify any path because
+  this is the default path that SageMaker writes the hook configuration to.
+
+  **Parameters:**
+
+    - json_file_path (str)
+
+
+.. method:: close()
+
+  Closes all files that are currently open by the hook
+
+
+.. method:: save_scalar()
+
+  Saves a scalar value by the given name. Passing ``sm_metric=True`` flag also
+  makes this scalar available as a SageMaker Metric to show up in SageMaker
+  Studio. Note that when ``sm_metric`` is False, this scalar always resides
+  only in your AWS account, but setting it to True saves the scalar also
+  on AWS servers. The default value of ``sm_metric`` for this method is False.
+
+  **Parameters:**
+
     - ``name (str)``, ``value (float)``, ``sm_metric (bool)``
-    - Saves a scalar value by the given name. Passing ``sm_metric=True`` flag also
-      makes this scalar available as a SageMaker Metric to show up in SageMaker
-      Studio. Note that when ``sm_metric`` is False, this scalar always resides
-      only in your AWS account, but setting it to True saves the scalar also
-      on AWS servers. The default value of ``sm_metric`` for this method is False.
-  * - ``save_tensor()``
+
+
+.. method:: save_tensor()
+
+  Manually save metrics tensors. The re cord_tensor_value() API is
+  deprecated in favor or ``save_tensor()``.
+
+  **Parameters:**
+
     - ``tensor_name (str)``, ``tensor_value (numpy.array or numpy.ndarray)``,
       ``collections_to_write (str or list[str])``
-    - Manually save metrics tensors. The re cord_tensor_value() API is
-      deprecated in favor or ``save_tensor()``.
+
 
 
 TensorFlow specific Hook API
@@ -63,7 +141,7 @@ TensorFlow specific Hook API
 
 Note that there are three types of Hooks in TensorFlow: SessionHook,
 EstimatorHook and KerasHook based on the TensorFlow interface being used
-for training. `This page <tensorflow.md>`__ shows examples of each of
+for training. :doc:`TensorFlow <tensorflow>` shows examples of each of
 these.
 
 +-----------------+-----------------+-----------------+-----------------+
