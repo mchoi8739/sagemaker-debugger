@@ -13,6 +13,12 @@ before going through this page.
   :show-inheritance:
   :inherited-members:
 
+.. autoclass::  smdebug.trials.create_trial
+  :members:
+  :undoc-members:
+  :show-inheritance:
+  :inherited-members:
+
 .. note::
   To use the following trial methods, you must create a ``trial`` object as guided
   in the `SMDebug Trial <smdebug.trials>`__ page.
