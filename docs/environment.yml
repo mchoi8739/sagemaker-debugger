@@ -2,13 +2,7 @@ channels:
    - conda-forge
 
 dependencies:
-   - sphinx==3.1.1
-   - sphinx-rtd-theme==0.5.0
-   - Jinja2==2.11
-   - docutils==0.15.2
-   - bokeh
-   - smdebug
-   - ipython
+
    - pip
    - pip:
       - smdebug
