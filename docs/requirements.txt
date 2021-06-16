@@ -4,3 +4,4 @@ Jinja2==2.11
 docutils==0.15.2
 smdebug
 bokeh
+ipython
