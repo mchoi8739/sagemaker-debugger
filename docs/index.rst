@@ -39,7 +39,6 @@ Welcome to the SMDebug documentation!
   :maxdepth: 2
   :caption: SMDebug Profiler Modules
 
-  smdebug.profiler
   smdebug.profiler.analysis
   smdebug.profiler.analysis.utils
   smdebug.profiler.analysis.notebook_utils
