@@ -4,4 +4,4 @@ channels:
 dependencies:
    - pip
    - pip:
-      - git+https://github.com/mchoi8739/sagemaker-debugger.git@smdebug-sphinx-apidoc-2
+      - smdebug
