@@ -35,14 +35,12 @@ from smdebug.exceptions import (
 
 class Trial(ABC):
     """
-    Attributes:
-        _tensors
-        _index_tensors_dict
+    The base class for SMDebug trial object. A trial creation helper function
+    ~:class:`smdebug.trials.create_trial` was introduced in
+    the previous topic at :doc:`smdebug.trials`.
 
-    ['name', '_tensors', '_mode_to_global', '_global_to_mode', 'logger', 'parallel',
-    'check', 'range_steps', 'collection_manager', 'loaded_all_steps', 'cache', 'path',
-    'index_tensors_dict', 'index_mode', 'last_event_token', 'last_index_token', 'index_reader',
-    'dynamic_refresh', 'trial_dir']
+    After you create a SMDebug trial object, you can use the following
+    Trial class methods for accessing output tensor information.
 
     """
 
