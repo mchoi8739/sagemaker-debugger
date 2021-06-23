@@ -9,13 +9,8 @@ before going through this page.
 
 .. autoclass:: smdebug.trials.trial.Trial
   :members:
-  :inherited-members:
-
-.. autoclass::  smdebug.trials.create_trial
-  :members:
   :undoc-members:
   :show-inheritance:
-  :inherited-members:
 
 .. note::
   To use the following trial methods, you must create a ``trial`` object as guided
