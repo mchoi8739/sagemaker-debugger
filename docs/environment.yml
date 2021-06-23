@@ -9,6 +9,7 @@ dependencies:
    - docutils==0.15.2
    - bokeh
    - ipython
+   - pandas
    - pip
    - pip:
       - smdebug
