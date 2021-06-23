@@ -8,7 +8,7 @@ dependencies:
    - bokeh
    - ipython
    - pandas
-   - protobuf3
    - pip
    - pip:
+      - protobuf3
       - smdebug
