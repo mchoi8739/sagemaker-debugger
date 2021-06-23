@@ -7,52 +7,6 @@ capable of loading new tensors as soon as they become available from the
 given path, allowing you to do both offline as well as real-time
 analysis.
 
-Path to SMDebug artifacts
--------------------------
-
-To create an SMDebug trial object, you need to know where the SMDebug artifacts are saved.
-
-1. For SageMaker training jobs
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-When running a SageMaker job, SMDebug artifacts are saved to Amazon S3.
-SageMaker saves data
-from your training job to a local path of the training container and
-uploads them to an S3 bucket of your account. When you start a
-SageMaker training job with the python SDK, you can set the path
-using the parameter ``s3_output_path`` of the ``DebuggerHookConfig``
-object. If you don't specify the path, SageMaker automatically sets the
-output path to your default S3 bucket.
-
-**Example**
-
-.. code:: python
-
-  from sagemaker.debugger import CollectionConfig, DebuggerHookConfig
-
-  collection_configs=[
-      CollectionConfig(name="weights"),
-      CollectionConfig(name="gradients")
-  ]
-
-  debugger_hook_config=DebuggerHookConfig(
-    s3_output_path="specify-your-s3-bucket-uri"  # Optional
-    collection_configs=collection_configs
-  )
-
-For more information, see `Configure Debugger Hook to Save Tensors
-<https://docs.aws.amazon.com/sagemaker/latest/dg/debugger-configure-hook.html>`__
-in the *Amazon SageMaker Developer Guide*.
-
-2. For non-SageMaker training jobs
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-If you are running a training job outside SageMaker, this is the path you
-pass as ``out_dir`` when you create an SMDebug Hook.
-When creating the hook, you can
-pass either a local path (for example, ``/home/ubuntu/smdebug_outputs/``)
-or an S3 bucket path (for example, ``s3://bucket/prefix``).
-
 Create an SMDebug trial object
 ------------------------------
 
