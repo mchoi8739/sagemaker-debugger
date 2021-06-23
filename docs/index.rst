@@ -51,6 +51,7 @@ Welcome to the SMDebug documentation!
 
 .. toctree::
   :maxdepth: 1
+  :caption: Glossary
 
   glossary
 
