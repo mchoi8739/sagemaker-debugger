@@ -1,5 +1,5 @@
-smdebug.profiler.analysis.notebook\_utils
-=========================================
+SMDebug Profiler Visualization API
+==================================
 
 .. automodule:: smdebug.profiler.analysis.notebook_utils.heatmap
    :members:

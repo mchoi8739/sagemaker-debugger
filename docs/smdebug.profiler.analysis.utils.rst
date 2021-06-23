@@ -1,4 +1,4 @@
-smdebug.profiler.analysis.utils
+SMDebug Profiler Analysis Utils
 ===============================
 
 .. automodule:: smdebug.profiler.analysis.utils.merge_timelines
