@@ -36,7 +36,7 @@ from smdebug.exceptions import (
 class Trial(ABC):
     """
     The base class for SMDebug trial object. A trial creation helper function
-    ~:class:`smdebug.trials.create_trial` was introduced in
+    :class:`~smdebug.trials.create_trial` was introduced in
     the previous topic at :doc:`smdebug.trials`.
 
     After you create a SMDebug trial object, you can use the following
@@ -78,11 +78,10 @@ class Trial(ABC):
         self.workers_for_global_step = {}
         self.last_complete_step = -1
 
-        """
-        INCOMPLETE_STEP_WAIT_WINDOW defines the maximum number
-        of incomplete steps that the trial will wait for before marking
-        half of them as complete.
-        """
+        # INCOMPLETE_STEP_WAIT_WINDOW defines the maximum number
+        # of incomplete steps that the trial will wait for before marking
+        # half of them as complete.
+
         self._incomplete_wait_for_step_window = int(
             os.getenv(INCOMPLETE_STEP_WAIT_WINDOW_KEY, INCOMPLETE_STEP_WAIT_WINDOW_DEFAULT)
         )
@@ -412,6 +411,56 @@ class Trial(ABC):
         self.logger.debug(
             f"getting tensor_names with params: step:{step} mode:{mode} regex:{regex} collection:{collection}"
         )
+
+        """
+        Retrieves names of tensors saved.
+        All arguments to this method are optional. You are not required to pass
+        any of these arguments as keyword arguments.
+
+        Args:
+            - ``step (int)`` - If you want to retrieve the list of tensors saved at a
+              particular step, pass the step number as an integer. This step number
+              will be treated as step number corresponding to the mode passed
+              below. By default it is treated as global step.
+
+            - ``mode (smdebug.modes enum value)`` - If you want to retrieve the list
+              of tensors saved for a particular mode, pass the mode here as
+              ``smd.modes.TRAIN``, ``smd.modes.EVAL``, ``smd.modes.PREDICT``, or
+              ``smd.modes.GLOBAL``.
+
+            - ``regex (str or list[str])`` - You can filter tensors matching regex
+              expressions by passing a regex expressions as a string or list of
+              strings. You can only pass one of ``regex`` or ``collection``
+              parameters.
+
+            - ``collection (Collection or str)`` - You can filter tensors belonging
+              to a collection by either passing a collection object or the name of
+              collection as a string. You can only pass one of ``regex`` or
+              ``collection`` parameters.
+
+        Returns:
+
+        ``list[str]`` - List of strings representing names of tensors matching
+        the given arguments. Arguments are processed as follows: get the list of
+        tensor names for given step and mode, saved for given step matching all
+        the given arguments, i.e. intersection of tensors matching each of the
+        parameters.
+
+        **Examples:**
+
+        - ``trial.tensor_names()`` - Returns all tensors saved for any step or
+          mode.
+        - ``trial.tensor_names(step=10, mode=modes.TRAIN)`` - Returns tensors
+          saved for training step 10
+        - ``trial.tensor_names(regex='relu')`` - Returns all tensors matching the
+          regex pattern ``relu`` saved for any step or mode.
+        - ``trial.tensor_names(collection='gradients')`` - Returns tensors from
+          collection “gradients”
+        - ``trial.tensor_names(step=10, mode=modes.TRAIN, regex='softmax')`` -
+          Returns tensor saved for 10th training step which matches the regex
+          ``softmax``
+
+        """
 
         if regex is None and collection is None:
             return sorted(list(ts))
