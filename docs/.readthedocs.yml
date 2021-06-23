@@ -28,6 +28,6 @@ sphinx:
 
 python:
   version: 3.6
-  
+
 conda:
   environment: environment.yml
