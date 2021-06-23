@@ -34,7 +34,6 @@ autodoc_mock_imports = ["mxnet", "tensorflow", "torch", "xgboost"]
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
-    "recommonmark",
     "sphinx.ext.autodoc",
     "sphinx.ext.doctest",
     "sphinx.ext.intersphinx",
@@ -47,7 +46,7 @@ extensions = [
 
 # Markdown support
 # The suffix of source filenames.
-source_suffix = {".rst": "restructuredtext", ".txt": "markdown", ".md": "markdown"}
+source_suffix = {".rst": "restructuredtext"}
 master_doc = "index"  # The master toctree document.
 
 #pygments_style = "default"
