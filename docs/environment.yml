@@ -2,7 +2,6 @@ channels:
    - conda-forge
 
 dependencies:
-
    - pip
    - pip:
-      - smdebug
+      - git+https://github.com/mchoi8739/sagemaker-debugger.git@smdebug-sphinx-apidoc-2
