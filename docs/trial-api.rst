@@ -9,8 +9,6 @@ before going through this page.
 
 .. autoclass:: smdebug.trials.trial.Trial
   :members:
-  :undoc-members:
-  :show-inheritance:
   :inherited-members:
 
 .. autoclass::  smdebug.trials.create_trial

@@ -59,7 +59,11 @@ Create an SMDebug trial object
 Depending on the output path, there are two types of trials you can create: LocalTrial or S3Trial.
 We provide a wrapper method that automatically creates the right trial.
 
-.. class:: smdebug.trials.create_trial(path, name=None, profiler=False, output_dir='/opt/ml/processing/outputs/', **kwargs)
+.. autoclass::  smdebug.trials.create_trial
+  :members:
+  :undoc-members:
+  :show-inheritance:
+  :inherited-members:
 
   **Parameters:**
 
