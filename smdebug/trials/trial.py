@@ -418,33 +418,32 @@ class Trial(ABC):
         any of these arguments as keyword arguments.
 
         Args:
-            - ``step (int)`` - If you want to retrieve the list of tensors saved at a
-              particular step, pass the step number as an integer. This step number
-              will be treated as step number corresponding to the mode passed
-              below. By default it is treated as global step.
+            step (int): If you want to retrieve the list of tensors saved at a
+                particular step, pass the step number as an integer. This step number
+                will be treated as step number corresponding to the mode passed
+                below. By default it is treated as global step.
 
-            - ``mode (smdebug.modes enum value)`` - If you want to retrieve the list
-              of tensors saved for a particular mode, pass the mode here as
-              ``smd.modes.TRAIN``, ``smd.modes.EVAL``, ``smd.modes.PREDICT``, or
-              ``smd.modes.GLOBAL``.
+            mode (smdebug.modes enum value): If you want to retrieve the list
+                of tensors saved for a particular mode, pass the mode here as
+                ``smd.modes.TRAIN``, ``smd.modes.EVAL``, ``smd.modes.PREDICT``, or
+                ``smd.modes.GLOBAL``.
 
-            - ``regex (str or list[str])`` - You can filter tensors matching regex
-              expressions by passing a regex expressions as a string or list of
-              strings. You can only pass one of ``regex`` or ``collection``
-              parameters.
+            regex (str or list[str]): You can filter tensors matching regex
+                expressions by passing a regex expressions as a string or list of
+                strings. You can only pass one of ``regex`` or ``collection``
+                parameters.
 
-            - ``collection (Collection or str)`` - You can filter tensors belonging
-              to a collection by either passing a collection object or the name of
-              collection as a string. You can only pass one of ``regex`` or
-              ``collection`` parameters.
+            collection (Collection or str): You can filter tensors belonging
+                to a collection by either passing a collection object or the name of
+                collection as a string. You can only pass one of ``regex`` or
+                ``collection`` parameters.
 
         Returns:
-
-        ``list[str]`` - List of strings representing names of tensors matching
-        the given arguments. Arguments are processed as follows: get the list of
-        tensor names for given step and mode, saved for given step matching all
-        the given arguments, i.e. intersection of tensors matching each of the
-        parameters.
+            list[str]: List of strings representing names of tensors matching
+                the given arguments. Arguments are processed as follows: get the list of
+                tensor names for given step and mode, saved for given step matching all
+                the given arguments, i.e. intersection of tensors matching each of the
+                parameters.
 
         **Examples:**
 
