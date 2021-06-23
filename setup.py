@@ -10,6 +10,7 @@ It supports TensorFlow, PyTorch, MXNet, and XGBoost on Python 3.6+.
 - Interactive exploration of saved tensors
 - Distributed training support
 - TensorBoard support
+
 """
 
 # Standard Library
@@ -22,8 +23,6 @@ import setuptools
 
 exec(open("smdebug/_version.py").read())
 CURRENT_VERSION = __version__
-
-docs_env = os.environ.get("READTHEDOCS")
 
 DOCLINES = (__doc__ or "").split("\n")
 FRAMEWORKS = ["tensorflow", "pytorch", "mxnet", "xgboost"]
@@ -81,19 +80,7 @@ if compile_summary_protobuf() != 0:
         "ERROR: Compiling summary protocol buffers failed. You will not be able to use smdebug. "
         "Please make sure that you have installed protobuf3 compiler and runtime correctly."
     )
-    if docs_env == "False":
-        sys.exit(1)
-    else:
-        os.system(
-            "curl -OL https://github.com/google/protobuf/releases/download/v3.7.1/protoc-3.7.1-linux-x86_64.zip"
-        )
-        os.system(
-            "unzip -o protoc-3.7.1-linux-x86_64.zip -d /home/docs/checkouts/readthedocs.org/user_builds/local bin/protoc"
-        )
-        os.system(
-            "unzip -o protoc-3.7.1-linux-x86_64.zip -d /home/docs/checkouts/readthedocs.org/user_builds/local include/*"
-        )
-        os.system("rm -f protoc-3.7.1-linux-x86_64.zip")
+    sys.exit(1)
 
 
 def scan_git_secrets():
@@ -115,9 +102,10 @@ def scan_git_secrets():
     return git("secrets", "--scan", "-r")
 
 
-if docs_env == "False":
-    if scan_git_secrets() != 0:
-        sys.exit(1)
+if scan_git_secrets() != 0:
+    import sys
+
+    sys.exit(1)
 
 
 def detect_smdebug_version():
