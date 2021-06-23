@@ -4,3 +4,4 @@ Jinja2==2.11
 docutils==0.15.2
 bokeh
 ipython
+git+https://github.com/mchoi8739/sagemaker-debugger.git@smdebug-sphinx-apidoc-2
