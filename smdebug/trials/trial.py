@@ -35,11 +35,12 @@ from smdebug.exceptions import (
 
 class Trial(ABC):
     """
-    The base class for SMDebug trial object. A trial creation helper function
+    The base class for creating an SMDebug trial objects.
+    A trial creation helper function
     :class:`~smdebug.trials.create_trial` was introduced in
     the previous topic at :doc:`smdebug.trials`.
 
-    After you create a SMDebug trial object, you can use the following
+    After you create an SMDebug trial object, use the following
     Trial class methods for accessing output tensor information.
 
     """
@@ -218,6 +219,22 @@ class Trial(ABC):
     def tensor(self, tname):
         # will not show tensor if it was not written yet
         # has tensor will refresh
+        """Retrieves the ``smdebug.core.tensor.Tensor`` object by the given name
+        ``tname``. To find available methods that this Tensor object
+        provides, see :doc:`tensor-api`.
+
+        If output tensor is still not available when you run this method,
+        it refreshes the method call until the first output tensor becomes available.
+
+        Args:
+            tname (str): Takes the name of tensor
+
+        Returns:
+            :class:`~smdebug.core.tensor.Tensor` object:
+            An output tensor object.
+
+        """
+
         if self.has_tensor(tname):
             return self._tensors[tname]
         else:
@@ -225,6 +242,18 @@ class Trial(ABC):
 
     def has_tensor(self, tname):
         # will return false if tensor was not written yet
+        """Checks if the trial has a tensor of the given tensor name.
+
+        Args:
+            tname (str): Takes the name of tensor
+
+        Returns:
+            bool:
+                ``True`` if the tensor is found by the trial, else it returns
+                ``False``.
+
+        """
+
         if tname not in self._tensors:
             self.maybe_refresh(tname)
         return tname in self._tensors
@@ -400,22 +429,11 @@ class Trial(ABC):
         regex=None,
         collection=None,
     ) -> list:
-        self.maybe_refresh()
-        ts = set()
-        if step is None and mode == ModeKeys.GLOBAL:
-            ts.update(self._tensors.keys())
-        if step is None and mode != ModeKeys.GLOBAL:
-            ts.update(self.mode_to_tensors_map[mode])
-        else:
-            ts.update(self._tensors_for_step(step, mode))
-        self.logger.debug(
-            f"getting tensor_names with params: step:{step} mode:{mode} regex:{regex} collection:{collection}"
-        )
+        """Retrieves names of tensors saved.
 
-        """
-        Retrieves names of tensors saved.
         All arguments to this method are optional. You are not required to pass
-        any of these arguments as keyword arguments.
+        any of the following arguments. By default, this method returns all tensor names
+        if you don't pass any arguments.
 
         Args:
             step (int): If you want to retrieve the list of tensors saved at a
@@ -439,7 +457,8 @@ class Trial(ABC):
                 ``collection`` parameters.
 
         Returns:
-            list[str]: List of strings representing names of tensors matching
+            list[str]:
+                List of strings representing names of tensors matching
                 the given arguments. Arguments are processed as follows: get the list of
                 tensor names for given step and mode, saved for given step matching all
                 the given arguments, i.e. intersection of tensors matching each of the
@@ -460,6 +479,17 @@ class Trial(ABC):
           ``softmax``
 
         """
+        self.maybe_refresh()
+        ts = set()
+        if step is None and mode == ModeKeys.GLOBAL:
+            ts.update(self._tensors.keys())
+        if step is None and mode != ModeKeys.GLOBAL:
+            ts.update(self.mode_to_tensors_map[mode])
+        else:
+            ts.update(self._tensors_for_step(step, mode))
+        self.logger.debug(
+            f"getting tensor_names with params: step:{step} mode:{mode} regex:{regex} collection:{collection}"
+        )
 
         if regex is None and collection is None:
             return sorted(list(ts))
@@ -488,16 +518,40 @@ class Trial(ABC):
         return []
 
     def workers(self):
+        """Query for all the worker processes from which data was saved by smdebug
+        during multi worker training.
+
+        Returns:
+            list[str]:
+                A sorted list of names of worker processes from which data
+                was saved. If using TensorFlow Mirrored Strategy for multi worker
+                training, these represent names of different devices in the process. For
+                Horovod, torch.distributed and similar distributed training approaches,
+                these represent names of the form ``worker_0`` where 0 is the rank of
+                the process.
+
+        """
+
         self.maybe_refresh()
         return sorted(list(self.worker_set))
 
     def steps(self, mode=ModeKeys.GLOBAL, show_incomplete_steps=False) -> list:
-        """
-        the steps function call returns only completed steps to
-        the user.
-        :param mode: ModeKeys
-        :param show_incomplete_steps: bool
-        :return: list
+        """Retrieves a list of steps collected by SageMaker Debugger.
+
+        Args:
+            mode (smdebug.modes enum value): Passing a mode here allows you
+                want to retrieve the list of steps seen by a trial for that mode If
+                this is not passed, returns steps for all modes.
+            show_incomplete_steps (bool)
+
+        Returns:
+            list[int]:
+                List of integers representing step numbers. If a mode was
+                passed, this returns steps within that mode, i.e. mode steps. Each of
+                these mode steps has a global step number associated with it. The global
+                step represents the sequence of steps across all modes executed by the
+                job.
+
         """
         all_steps = self._all_steps(mode)
         if show_incomplete_steps is True:
@@ -535,6 +589,20 @@ class Trial(ABC):
             return self._mode_to_global[mode][mode_step]
 
     def global_step(self, mode, mode_step):
+        """Given a mode and a mode_step number you can retrieve its global step
+        using this method.
+
+        Args:
+            mode (smdebug.modes enum value): Takes the mode as enum value
+            mode_step (int): Takes the mode step as an integer
+
+        Returns:
+            ``int``:
+                An integer representing ``global_step`` of the given mode and
+                ``mode_step``.
+
+        """
+
         s = self._global_step_currently(mode, mode_step)
         if s is not None:
             return s
@@ -559,27 +627,116 @@ class Trial(ABC):
 
     def mode_step(self, global_step):
         # can return global step itself in some cases
+        """Given a global step number you can identify the ``mode_step`` for that
+        step using this method.
+
+        Args:
+            global_step (int): Takes the global step as an integer.
+
+        Returns:
+            ``int``:
+                An integer representing ``mode_step`` of the given global step.
+                Typically used in conjunction with ``mode`` method.
+
+        """
+
         x = self.mode_modestep(global_step)
         if x:
             return x[1]
 
     def mode(self, global_step):
         # can return global mode in some cases
+        """Given a global step number you can identify the mode for that step using
+        this method.
+
+        Args:
+            global_step (int): Takes the global step as an integer.
+
+        Returns:
+            ``smdebug.modes enum value`` of the given global step.
+
+        """
+
         x = self.mode_modestep(global_step)
         if x:
             return x[0]
 
     def modes(self):
         # will not return global mode
+        """Retrieve a list of modes seen by the trial.
+
+        Returns:
+            list[smdebug.modes enum value]:
+                List of modes for which data was
+                saved at all steps collected from the training job.
+
+        """
+
         return self._mode_to_global.keys()
 
     def collections(self):
+        """List the collections from the trial.
+
+        Note that tensors part of these
+        collections may not necessarily have been saved from the training job.
+        Whether a collection was saved or not depends on the configuration of
+        the Hook during training.
+
+        Returns:
+            dict[str -> Collection]:
+                A dictionary indexed by the name of the
+                collection, with the Collection object as the value. Please refer
+                :doc:`collections` for more details.
+
+        """
+
         return self.collection_manager.collections
 
     def collection(self, coll_name):
+        """Get a specific collection from the trial.
+
+        Note that tensors which are
+        part of this collection may not necessarily have been saved from the
+        training job. Whether this collection was saved or not depends on the
+        configuration of the Hook during training.
+
+        Args:
+            coll_name (str): Name of the collection
+
+        Returns:
+            ``Collection``:
+                The requested Collection object. Please refer
+                :doc:`collections` for more details.
+
+        """
         return self.collection_manager.get(coll_name)
 
     def wait_for_steps(self, required_steps, mode=ModeKeys.GLOBAL):
+        """This method allows you to wait for steps before proceeding.
+
+        You might
+        want to use this method if you want to wait for smdebug to see the
+        required steps so you can then query and analyze the tensors saved by
+        that step. This method blocks till all data from the steps are seen by
+        smdebug.
+
+        Args:
+            required_steps (list[int]): Step numbers to wait for
+            mode (smdebug.modes enum value): The mode to which given step
+                numbers correspond to. This defaults to modes.GLOBAL.
+
+        Returns:
+            None:
+                Only returns after we know definitely whether we have seen
+                the steps.
+
+        **Exceptions raised:**
+
+        ``StepUnavailable`` and ``NoMoreData``. See `Exceptions <#exceptions>`__
+        section for more details.
+
+        """
+
         with refresh(self):
             for step in required_steps:
                 while True:
@@ -604,29 +761,48 @@ class Trial(ABC):
         This function indicates whether a step is complete (AVAILABLE),
         incomplete ( NOT_YET_AVAILABLE ) or absent ( UNAVAILABLE ).
 
-        Overview of logic:
+        **Overview of logic:**
 
-            1. if the queried step is greater than all the available steps (complete / incomplete):
+        1. if the queried step is greater than all the available steps (complete / incomplete):
+
+            .. code:: python
+
                 if job is not complete:
                     return StepState.NOT_YET_AVAILABLE
                 else:
                     return StepState.UNAVAILABLE
-            2. if the queried step is less or equal to a step in available steps (complete / incomplete):
+
+        2. if the queried step is less or equal to a step in available steps (complete / incomplete):
+
+            .. code:: python
+
                 if the queried step is less than all the available steps:
                     if single_worker:
                         return UNAVAILABLE ( step has been skipped or will not written)
                     else:
                         return NOT_YET_AVAILABLE
-            3. queried step is available:
+
+        3. queried step is available:
+
+            .. code:: python
+
                 if all workers have written the step or job is complete
                 or last_complete_step > step ( All workers have written a step greater than the step we are checking.
                                                     Hence, the step will never be complete. )
                     return AVAILABLE
                 else:
                      return NOT_YET_AVAILABLE
-        :param step: str
-        :param mode: ModeKeys.GLOBAL
-        :return: StepState
+
+        Args:
+            step (int): The step number to check if the trial has passed it.
+            mode (smdebug.modes enum value): The mode to which given step
+                number corresponds to. This defaults to modes.GLOBAL.
+
+        Returns:
+            smdebug.core.tensor.StepState enum value:
+                Returns one of the following
+                values: ``UNAVAILABLE``, ``AVAILABLE``,
+                and ``NOT_YET_AVAILABLE``.
 
         """
         all_steps = self.steps(mode=mode, show_incomplete_steps=True)
