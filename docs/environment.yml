@@ -8,4 +8,4 @@ dependencies:
    - bokeh
    - ipython
    - pandas
-   - pip
+   - smdebug
