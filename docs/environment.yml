@@ -10,4 +10,4 @@ dependencies:
    - pandas
    - pip
    - pip:
-      - https://github.com/mchoi8739/sagemaker-debugger.git@smdebug-sphinx-apidoc-2 
+      - git+https://github.com/mchoi8739/sagemaker-debugger.git@smdebug-sphinx-apidoc-2 
